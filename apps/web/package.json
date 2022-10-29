@@ -1,7 +1,6 @@
 {
   "name": "web",
-  "version": "0.0.0",
-  
+  "version": "0.0.0",  
   "private": true,
   "description": "Web app for graphite",
   "scripts": {
@@ -15,7 +14,8 @@
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "core": "*"
+    "core": "*",
+    "graphite": "*"
   },
   "devDependencies": {
     "@babel/core": "7.19.6",
@@ -25,6 +25,7 @@
     "@types/react-dom": "18.0.8",
     "typescript": "4.8.4",
     "tsconfig": "*",
-    "eslint-config-custom": "*"
+    "eslint-config-custom": "*",
+    "next-transpile-modules": "9.1.0"
   }
 }
