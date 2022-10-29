@@ -1,0 +1,6 @@
+{
+    "extends": "tsconfig/react.json",
+    "display": "core",
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules", "dist"]
+  }
