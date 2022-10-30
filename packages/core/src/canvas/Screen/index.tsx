@@ -6,7 +6,7 @@ interface ScreenProps {
 
 function Screen({ children }: ScreenProps) {
   return (
-    <div>
+    <div className="screen">
       screen
       {children}
     </div>

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import 'styles/global.css';
+import 'graphite/dist/style.css'
 
 function App({ Component, pageProps }: any) {
   return (

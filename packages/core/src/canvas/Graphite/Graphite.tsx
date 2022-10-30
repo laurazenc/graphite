@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import Screen from '../Screen';
 
-import './style.css';
+import '../../styles/style.css';
 
 const Graphite = forwardRef(() => {
   return (

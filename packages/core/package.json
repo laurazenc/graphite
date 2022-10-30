@@ -24,17 +24,21 @@
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
-    "sideEffects": false,
+    "sideEffects": [
+        "*.css"
+      ],
     "license": "MIT",
     "scripts": {
-        "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react",
+        "dev": "concurrently \"tsup src/index.ts --format esm,cjs --watch --dts --external react\" \"yarn css --watch\"",
         "build": "tsup src/index.ts --format esm,cjs --dts --external react",
+        "css": "postcss src/styles/{base,style}.css --config ./postcss.config.js --dir dist",
+        "css-watch": "yarn css --watch",
         "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
     },
     "peerDependencies": {
-     "react": ">=18",
-     "react-dom": ">=18"
+        "react": ">=18",
+        "react-dom": ">=18"
     },
     "devDependencies": {
         "eslint-config-custom": "*",
@@ -44,7 +48,8 @@
         "@types/react": "18.0.24",
         "react": "18.2.0",
         "tsup": "6.3.0",
-        "typescript": "4.8.4"
+        "typescript": "4.8.4",
+        "postcss": "8.4.18"
     },
     "publishConfig": {
         "access": "public"
