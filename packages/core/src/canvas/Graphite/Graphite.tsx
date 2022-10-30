@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
-import Screen from "../Screen";
+import { forwardRef } from 'react';
+import Screen from '../Screen';
 
-import "./style.css";
+import './style.css';
 
 const Graphite = forwardRef(() => {
   return (
@@ -11,6 +11,6 @@ const Graphite = forwardRef(() => {
   );
 });
 
-Graphite.displayName = "Graphite";
+Graphite.displayName = 'Graphite';
 
 export default Graphite;

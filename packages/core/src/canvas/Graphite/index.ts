@@ -1,1 +1,1 @@
-export { default as Graphite } from "./Graphite";
+export { default as Graphite } from './Graphite';

@@ -1,7 +1,7 @@
-import dynamic from "next/dynamic";
-import Head from "next/head";
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
-const Graphite = dynamic(() => import("graphite"), { ssr: false });
+const Graphite = dynamic(() => import('graphite'), { ssr: false });
 
 export default function Web() {
   return (

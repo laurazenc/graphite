@@ -1,2 +1,2 @@
-export * from "./Graphite";
-export { default as Screen } from "./Screen";
+export * from './Graphite';
+export { default as Screen } from './Screen';
