@@ -19,24 +19,34 @@
         "turborepo"
     ],
     "files": [
-        "dist/**/*"
+        "dist/**"
     ],
-    "main": "src/index.ts",
-    "types": "src/index.ts",
-    "sideEffects": [
-      "*.css"
-    ],
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "sideEffects": false,
     "license": "MIT",
-    "publishConfig": {
-      "access": "public"
-    },
     "scripts": {
-        "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
-        "typecheck": "tsc --noEmit"
-      },    
+        "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react",
+        "build": "tsup src/index.ts --format esm,cjs --dts --external react",
+        "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    },
+    "peerDependencies": {
+     "react": ">=18",
+     "react-dom": ">=18"
+    },
     "devDependencies": {
-        "tsconfig": "*",
         "eslint-config-custom": "*",
+        "tsconfig": "*",
+        "eslint": "8.26.0",
+        "@types/node": "18.11.7",
+        "@types/react": "18.0.24",
+        "react": "18.2.0",
+        "tsup": "6.3.0",
         "typescript": "4.8.4"
+    },
+    "publishConfig": {
+        "access": "public"
     }
-  }
+}

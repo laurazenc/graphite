@@ -10,11 +10,10 @@ module.exports = {
       'plugin:react/recommended',
       'plugin:react/jsx-runtime',
       'plugin:@typescript-eslint/recommended',
-      'turbo',
-      'prettier',
+      "plugin:prettier/recommended",
       'next'
     ],
-    plugins: ['react', '@typescript-eslint'],
+    plugins: ['react', '@typescript-eslint', 'prettier'],
     parserOptions: {
       ecmaFeatures: {
         jsx: true,

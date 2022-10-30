@@ -12,6 +12,8 @@
     "allowJs": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "rootDir": ".",
+    "baseUrl": ".",
   }
 }

@@ -1,1 +1,1 @@
-export { default as Graphite } from './canvas/Graphite';
+export * from "./canvas";
