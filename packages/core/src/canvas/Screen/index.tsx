@@ -5,12 +5,7 @@ interface ScreenProps {
 }
 
 function Screen({ children }: ScreenProps) {
-  return (
-    <div className="screen">
-      screen
-      {children}
-    </div>
-  );
+  return <div className="screen">{children}</div>;
 }
 
 export default Screen;
