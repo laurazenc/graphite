@@ -1,5 +1,5 @@
 {
     "extends": "../base/tsconfig/react.json",
     "include": ["."],
-    "exclude": ["node_modules", "dist", ".turbo"],
+    "exclude": ["node_modules", "dist"],
   }

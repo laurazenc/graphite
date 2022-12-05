@@ -26,7 +26,7 @@
     "types": "./dist/index.d.ts",
     "sideEffects": [
         "*.css"
-      ],
+    ],
     "license": "MIT",
     "scripts": {
         "dev": "concurrently \"tsup src/index.ts --format esm,cjs --watch --dts --external react\" \"yarn css --watch\"",
@@ -34,26 +34,31 @@
         "css": "postcss src/styles/{base,style}.css --config ./postcss.config.js --dir dist",
         "css-watch": "yarn css --watch",
         "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
-        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+        "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+        "test": "jest --watchAll"
     },
     "peerDependencies": {
         "react": ">=18",
         "react-dom": ">=18"
     },
     "dependencies": {
-        "xstate": "4.34.0",
-        "@xstate/react": "3.0.1"
+        "@xstate/react": "3.0.1",
+        "xstate": "4.34.0"
     },
     "devDependencies": {
-        "eslint-config-custom": "*",
-        "tsconfig": "*",
-        "eslint": "8.26.0",
+        "@types/jest": "29.2.2",
         "@types/node": "18.11.7",
         "@types/react": "18.0.24",
+        "eslint": "8.26.0",
+        "eslint-config-custom": "*",
+        "jest": "29.2.2",
+        "postcss": "8.4.18",
         "react": "18.2.0",
+        "ts-jest": "29.0.3",
+        "ts-node": "10.9.1",
+        "tsconfig": "*",
         "tsup": "6.3.0",
-        "typescript": "4.8.4",
-        "postcss": "8.4.18"
+        "typescript": "4.8.4"
     },
     "publishConfig": {
         "access": "public"

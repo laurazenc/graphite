@@ -29,8 +29,9 @@
   left: 0;
   transform-origin: center center;
   pointer-events: all;
+  user-select: none;
   cursor: grab;
-  transition: left top .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   border-width: 1px;
   border-style: solid;

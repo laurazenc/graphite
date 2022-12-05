@@ -4,7 +4,7 @@
   "private": true,
   "description": "Web app for graphite",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 9000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

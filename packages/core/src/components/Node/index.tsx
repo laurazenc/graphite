@@ -1,14 +1,15 @@
-import { ReactNode, useCallback, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { useMachine } from '@xstate/react';
 import nodeDragAndDropMachine from '../../machines/nodeDragAndDropMachine';
 
 interface NodeProps {
+  id: string;
   children: ReactNode;
   x: number;
   y: number;
 }
 
-const Node = ({ children, x, y }: NodeProps) => {
+const Node = ({ children, x, y, ...rest }: NodeProps) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const [state, send] = useMachine(nodeDragAndDropMachine);
 
@@ -45,10 +46,10 @@ const Node = ({ children, x, y }: NodeProps) => {
       }}
       role="button"
       onMouseDown={onMouseDownHandler}
-      // onMouseEnter={onMouseEnterHandler}
       onMouseLeave={onMouseLeaveHandler}
       onMouseMove={onMouseMoveHandler}
       onMouseUp={onMouseUpHandler}
+      {...rest}
     >
       {children}
     </div>
