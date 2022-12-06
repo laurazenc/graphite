@@ -1,26 +1,29 @@
 import pathFinder, { Vertex } from '../../routing/path-finder';
 import { Coordinate } from '../../routing/types';
+import distance from '../../routing/distance';
 
 export interface ConnectorProps {
   source: Vertex;
   target: Vertex;
 }
 
-function generateSVGPath(points: Coordinate[], command): string {
-  const d = points.reduce((acc, point, i, a) => {
-    console.log(acc);
-    return i === 0 ? `M ${point.x},${point.y}` : `${acc} ${command(point, i, a)}`;
+type CommandFn = (point: Coordinate, i: number, a: Coordinate[]) => string;
+
+const RADIUS = 8;
+
+function generateSVGPath(points: Coordinate[], command: CommandFn): string {
+  return points.reduce((acc, point, i, a) => {
+    let segment: string;
+
+    if (i > 0 && i < points.length - 1) {
+      segment = `${acc} ${command(point, i, a)}`;
+    } else {
+      segment = `${i === 0 ? 'M' : 'L'}${point.x} ${point.y}`;
+    }
+
+    acc += segment;
+    return acc;
   }, '');
-  /*const d = points
-    .map((point, index) => {
-      if (index === 0) {
-        return `M ${point.x} ${point.y}`;
-      }
-      return `C ${point.x - 10} ${point.y - 10} ${point.x + 10} ${point.y + 10} ${point.x} ${point.y}`;
-    })
-    .join(' ');*/
-  console.log(d);
-  return d;
 }
 
 const controlPoint = (current, previous, next, reverse) => {
@@ -51,9 +54,9 @@ const line = (pointA, pointB) => {
   };
 };
 
-const lineCommand = (point: Coordinate) => `L ${point.x} ${point.y}`;
+const lineCommand: CommandFn = (point: Coordinate) => `L ${point.x} ${point.y}`;
 
-const bezierCommand = (point: Coordinate, i, a) => {
+const bezierCommand: CommandFn = (point: Coordinate, i: number, a: Coordinate[]): string => {
   console.log(point, i, a);
   // start control point
   const [cpsX, cpsY] = controlPoint(a[i - 1], a[i - 2], point);
@@ -62,9 +65,32 @@ const bezierCommand = (point: Coordinate, i, a) => {
   return `C ${cpsX},${cpsY} ${cpeX},${cpeY} ${point.x},${point.y}`;
 };
 
+const smoothStepCommand: CommandFn = (point: Coordinate, i: number, a: Coordinate[]): string => {
+  const start = a[i - 1];
+  const middle = point;
+  const end = a[i + 1];
+
+  const bendSize = Math.min(distance(start, middle) / 2, distance(middle, end) / 2, RADIUS);
+  const { x, y } = middle;
+
+  if ((start.x === x && x === end.x) || (start.y === y && y === end.y)) {
+    return `L${x} ${y}`;
+  }
+
+  if (start.y === y) {
+    const xDir = start.x < end.x ? -1 : 1;
+    const yDir = start.y < end.y ? 1 : -1;
+    return `L ${x + bendSize * xDir},${y}Q ${x},${y} ${x},${y + bendSize * yDir}`;
+  }
+
+  const xDir = start.x < end.x ? 1 : -1;
+  const yDir = start.y < end.y ? -1 : 1;
+  return `L ${x},${y + bendSize * yDir}Q ${x},${y} ${x + bendSize * xDir},${y}`;
+};
+
 export default function Connector({ source, target }: ConnectorProps) {
   const path = pathFinder(source, target);
-  const svgPath = generateSVGPath(path, lineCommand);
+  const svgPath = generateSVGPath(path, smoothStepCommand);
 
   return (
     <svg
