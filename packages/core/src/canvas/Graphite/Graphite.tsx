@@ -6,13 +6,18 @@ import Connector from '../../components/Connector/Connector';
 import { Vertex } from '../../routing/path-finder';
 import Rectangle from '../../routing/Rectangle';
 
-const source: Vertex = {
+const a: Vertex = {
   rect: Rectangle.fromRect({ left: 50, top: 50, height: 60, width: 90 }),
   side: 'LEFT',
 };
 
-const target: Vertex = {
+const b: Vertex = {
   rect: Rectangle.fromRect({ left: 250, top: 100, height: 60, width: 90 }),
+  side: 'BOTTOM',
+};
+
+const c: Vertex = {
+  rect: Rectangle.fromRect({ left: 150, top: 200, height: 60, width: 90 }),
   side: 'BOTTOM',
 };
 
@@ -20,14 +25,19 @@ const Graphite = () => {
   return (
     <div className="container">
       <Screen>
-        <Node x={source.rect.left} y={source.rect.top} id="1" width={source.rect.width} height={source.rect.height}>
+        <Node x={a.rect.left} y={a.rect.top} id="1" width={a.rect.width} height={a.rect.height}>
           Node 1
         </Node>
-        <Node x={target.rect.left} y={target.rect.top} id="2" width={source.rect.width} height={source.rect.height}>
+        <Node x={b.rect.left} y={b.rect.top} id="2" width={b.rect.width} height={b.rect.height}>
           Node 2
         </Node>
 
-        <Connector source={source} target={target} />
+        <Node x={c.rect.left} y={c.rect.top} id="3" width={c.rect.width} height={c.rect.height}>
+          Node 3
+        </Node>
+
+        <Connector source={a} target={b} />
+        <Connector source={b} target={c} />
       </Screen>
     </div>
   );
