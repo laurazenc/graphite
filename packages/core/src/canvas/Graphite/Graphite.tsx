@@ -5,6 +5,8 @@ import Node from '../../components/Node/Node';
 import Connector from '../../components/Connector/Connector';
 import { Vertex } from '../../routing/path-finder';
 import Rectangle from '../../routing/Rectangle';
+import React from 'react';
+import Grid from '../../components/Grid/Grid';
 
 const a: Vertex = {
   rect: Rectangle.fromRect({ left: 50, top: 50, height: 60, width: 90 }),
@@ -24,6 +26,7 @@ const c: Vertex = {
 const Graphite = () => {
   return (
     <div className="container">
+      <Grid />
       <Screen>
         <Node x={a.rect.left} y={a.rect.top} id="1" width={a.rect.width} height={a.rect.height}>
           Node 1
