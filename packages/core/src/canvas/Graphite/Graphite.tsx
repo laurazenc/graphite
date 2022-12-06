@@ -1,7 +1,7 @@
 import Screen from '../Screen';
 
 import '../../styles/style.css';
-import Node from '../../components/Node';
+import Node from '../../components/Node/Node';
 import Connector from '../../components/Connector/Connector';
 import { Vertex } from '../../routing/path-finder';
 import Rectangle from '../../routing/Rectangle';
@@ -20,12 +20,13 @@ const Graphite = () => {
   return (
     <div className="container">
       <Screen>
-        <Node x={source.rect.left} y={source.rect.top} id="1">
+        <Node x={source.rect.left} y={source.rect.top} id="1" width={source.rect.width} height={source.rect.height}>
           Node 1
         </Node>
-        <Node x={target.rect.left} y={target.rect.top} id="2">
+        <Node x={target.rect.left} y={target.rect.top} id="2" width={source.rect.width} height={source.rect.height}>
           Node 2
         </Node>
+
         <Connector source={source} target={target} />
       </Screen>
     </div>

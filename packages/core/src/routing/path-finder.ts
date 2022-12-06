@@ -119,7 +119,6 @@ export default function pathFinder(source: Vertex, target: Vertex) {
   const path = shortestPath(graph, pointA, pointB);
 
   if (path.length > 0) {
-    console.log({ connections });
     return simplifyPath([pointA, ...shortestPath(graph, pointA, pointB), pointB]);
   } else {
     return [];

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, MouseEvent } from 'react';
 import { useMachine } from '@xstate/react';
 import nodeDragAndDropMachine from '../../machines/nodeDragAndDropMachine';
 
@@ -7,21 +7,23 @@ interface NodeProps {
   children: ReactNode;
   x: number;
   y: number;
+  width: number;
+  height: number;
 }
 
-const Node = ({ children, x, y, ...rest }: NodeProps) => {
+const Node = ({ children, x, y, width, height, ...rest }: NodeProps) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const [state, send] = useMachine(nodeDragAndDropMachine);
 
   useEffect(() => {
     if (!nodeRef.current) return;
     send('SET_POS', { x, y });
-  }, [x, y]);
+  }, [send, x, y]);
 
-  const onMouseDownHandler = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+  const onMouseDownHandler = (event: MouseEvent<HTMLDivElement, MouseEvent>): void => {
     send(event);
   };
-  const onMouseLeaveHandler = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+  const onMouseLeaveHandler = (event: MouseEvent<HTMLDivElement, MouseEvent>): void => {
     if (state.value !== 'idle') {
       send(event);
     }
@@ -34,7 +36,6 @@ const Node = ({ children, x, y, ...rest }: NodeProps) => {
       send(event);
     }
   };
-
   return (
     <div
       className="node"
@@ -43,6 +44,8 @@ const Node = ({ children, x, y, ...rest }: NodeProps) => {
         left: state.context.x,
         top: state.context.y,
         cursor: state.value === 'dragging' ? 'grabbing' : 'pointer',
+        width: `${width}px`,
+        height: `${height}px`,
       }}
       role="button"
       onMouseDown={onMouseDownHandler}

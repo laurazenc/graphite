@@ -13,8 +13,8 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  min-height: 0px;
-  min-width: 0px;
+  min-height: 0;
+  min-width: 0;
   max-height: 100%;
   max-width: 100%;
   overflow: hidden;
@@ -24,7 +24,6 @@
 
 .node {
   position: absolute;
-  padding: 20px;
   top: 0;
   left: 0;
   transform-origin: center center;
@@ -32,8 +31,9 @@
   user-select: none;
   cursor: grab;
   transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
-
   border-width: 1px;
   border-style: solid;
   border-color: #bbb;
+  padding: 0;
+  margin: 0;
 }
