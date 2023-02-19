@@ -7,6 +7,8 @@ import { Vertex } from '../../routing/path-finder';
 import Rectangle from '../../routing/Rectangle';
 import React from 'react';
 import Grid from '../../components/Grid/Grid';
+import GraphiteStoreProvider from '../../store/GraphiteStoreProvider';
+import NodeRenderer from '../NodeRenderer/NodeRenderer';
 
 const a: Vertex = {
   rect: Rectangle.fromRect({ left: 50, top: 50, height: 60, width: 90 }),
@@ -23,25 +25,28 @@ const c: Vertex = {
   side: 'BOTTOM',
 };
 
+const connectorAB = {
+  source: a,
+  target: b,
+};
+
+const connectorBC = {
+  source: b,
+  target: c,
+};
+
 const Graphite = () => {
+  // const graph = createGraph({ nodes: [a, b, c], connectors: [connectorAB, connectorBC] });
   return (
     <div className="container">
-      <Grid />
-      <Screen>
-        <Node x={a.rect.left} y={a.rect.top} id="1" width={a.rect.width} height={a.rect.height}>
-          Node 1
-        </Node>
-        <Node x={b.rect.left} y={b.rect.top} id="2" width={b.rect.width} height={b.rect.height}>
-          Node 2
-        </Node>
-
-        <Node x={c.rect.left} y={c.rect.top} id="3" width={c.rect.width} height={c.rect.height}>
-          Node 3
-        </Node>
-
-        <Connector source={a} target={b} />
-        <Connector source={b} target={c} />
-      </Screen>
+      <GraphiteStoreProvider>
+        <Grid />
+        <Screen>
+          <NodeRenderer />
+          <Connector source={a} target={b} />
+          <Connector source={b} target={c} />
+        </Screen>
+      </GraphiteStoreProvider>
     </div>
   );
 };

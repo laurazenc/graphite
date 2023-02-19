@@ -20,8 +20,13 @@
   overflow: hidden;
   box-sizing: border-box;
   outline: none;
+ 
+}
+
+.screen > .node {
   z-index: 1;
 }
+
 
 .node {
   position: absolute;

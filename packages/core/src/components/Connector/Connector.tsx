@@ -57,7 +57,6 @@ const line = (pointA, pointB) => {
 const lineCommand: CommandFn = (point: Coordinate) => `L ${point.x} ${point.y}`;
 
 const bezierCommand: CommandFn = (point: Coordinate, i: number, a: Coordinate[]): string => {
-  console.log(point, i, a);
   // start control point
   const [cpsX, cpsY] = controlPoint(a[i - 1], a[i - 2], point);
   // end control point

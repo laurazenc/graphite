@@ -46,7 +46,6 @@ const nodeDragAndDropMachine = createMachine(
           },
           mouseleave: {
             target: 'dragging',
-
             actions: ['moveDraggable', 'setMousePos'],
           },
         },
@@ -70,7 +69,7 @@ const nodeDragAndDropMachine = createMachine(
         return { ...ctx, x: nextX, y: nextY };
       }),
     },
-  }
+  },
 );
 
 export default nodeDragAndDropMachine;

@@ -36,6 +36,7 @@ const Node = ({ children, x, y, width, height, ...rest }: NodeProps) => {
       send(event);
     }
   };
+
   return (
     <div
       className="node"
