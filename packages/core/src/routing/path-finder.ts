@@ -1,14 +1,9 @@
-import Rectangle from './Rectangle';
-import { Coordinate, Side } from './types';
-import { buildGraph } from './build-graph';
+import { Coordinate, Vertex } from './types';
 import { shortestPath } from './graph';
+import { Rectangle } from './rectangle';
+import { buildGraph } from './build-graph';
 
 const MIN_SPACE = 10;
-
-export interface Vertex {
-  rect: Rectangle;
-  side: Side;
-}
 
 function buildHorizontalRuler(rect: Rectangle): number[] {
   const horizontalRulers: number[] = [];
@@ -91,7 +86,7 @@ function simplifyPath(points: Coordinate[]): Coordinate[] {
   return r;
 }
 
-export default function pathFinder(source: Vertex, target: Vertex) {
+export function pathFinder(source: Vertex, target: Vertex) {
   const pointA = source.rect.startPoint(source.side);
   const pointB = target.rect.startPoint(target.side);
   const points: Coordinate[] = [];

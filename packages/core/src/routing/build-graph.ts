@@ -1,7 +1,7 @@
 import { Coordinate, Line } from './types';
-import PointGraph from './graph';
+import { PointGraph } from './graph';
 
-export function buildGraph(points: Coordinate[]): { graph: PointGraph; connections: Line[] } {
+function buildGraph(points: Coordinate[]): { graph: PointGraph; connections: Line[] } {
   const hotXs: number[] = [];
   const hotYs: number[] = [];
   const graph = new PointGraph();
@@ -49,3 +49,5 @@ export function buildGraph(points: Coordinate[]): { graph: PointGraph; connectio
 
   return { graph, connections };
 }
+
+export { buildGraph };

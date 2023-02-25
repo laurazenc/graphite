@@ -1,6 +1,6 @@
-import pathFinder, { Vertex } from './path-finder';
-import Rectangle from './Rectangle';
-import { Coordinate } from './types';
+import { pathFinder } from './path-finder';
+import { Rectangle } from './rectangle';
+import { Coordinate, Vertex } from './types';
 
 const source: Vertex = {
   rect: Rectangle.fromRect({ left: 50, top: 50, height: 60, width: 90 }),

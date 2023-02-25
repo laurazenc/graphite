@@ -1,5 +1,5 @@
 import { Coordinate, Direction } from './types';
-import distance from './distance';
+import { distance as calculateDistance } from './distance';
 
 class PointNode {
   public distance = Infinity;
@@ -9,7 +9,7 @@ class PointNode {
   constructor(public data: Coordinate) {}
 }
 
-export default class PointGraph {
+class PointGraph {
   private index: { [x: string]: { [y: string]: PointNode } } = {};
 
   add(p: Coordinate) {
@@ -40,7 +40,7 @@ export default class PointGraph {
       throw new Error(`A point was not found`);
     }
 
-    nodeA.adjacentNodes.set(nodeB, distance(a, b));
+    nodeA.adjacentNodes.set(nodeB, calculateDistance(a, b));
   }
 
   get(p: Coordinate): PointNode {
@@ -151,3 +151,5 @@ export function shortestPath(graph: PointGraph, origin: Coordinate, destination:
 
   return destinationNode.shortestPath.map((n) => n.data);
 }
+
+export { PointGraph };

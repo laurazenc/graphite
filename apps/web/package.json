@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.0.0",  
+  "version": "0.0.0",
   "private": true,
   "description": "Web app for graphite",
   "scripts": {
@@ -14,8 +14,7 @@
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "core": "*",
-    "graphite": "*"
+    "graphite-react": "*"
   },
   "devDependencies": {
     "@babel/core": "7.19.6",

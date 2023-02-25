@@ -9,6 +9,7 @@
       "outputs": []
     },
     "dev": {
+      "outputs": ["dist/**"],
       "cache": false
     },
     "clean": {
@@ -16,6 +17,9 @@
     },
     "test": {
       "cache": false
+    },
+    "typecheck": {
+      "outputs": []
     }
   }
 }

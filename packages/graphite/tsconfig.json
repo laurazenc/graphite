@@ -1,6 +1,0 @@
-{
-    "extends": "../base/tsconfig/react.json",
-    "display": "graphite",
-    "include": ["**/*.ts", "**/*.tsx"],
-    "exclude": ["node_modules", "dist"]
-  }

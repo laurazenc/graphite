@@ -9,11 +9,8 @@
     "node_modules"
   ],
   "compilerOptions": {
-    "allowJs": true,
     "incremental": true,
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "rootDir": ".",
-    "baseUrl": ".",
+    "esModuleInterop": true,
+    "jsx": "preserve"
   }
 }

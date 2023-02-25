@@ -1,3 +1,5 @@
+import { Rectangle } from './rectangle';
+
 export interface Size {
   width: number;
   height: number;
@@ -37,4 +39,9 @@ export enum SIDE {
   TOP = 'TOP',
   RIGHT = 'RIGHT',
   BOTTOM = 'BOTTOM',
+}
+
+export interface Vertex {
+  rect: Rectangle;
+  side: Side;
 }

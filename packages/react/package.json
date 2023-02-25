@@ -1,0 +1,68 @@
+{
+  "name": "graphite-react",
+  "version": "0.0.0",
+  "description": "graphite react components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laurazenc/graphite.git",
+    "directory": "packages/react"
+  },
+  "keywords": [
+    "graph",
+    "whiteboard",
+    "canvas",
+    "diagram",
+    "workflow",
+    "react",
+    "graphite",
+    "monorepo",
+    "turborepo"
+  ],
+  "files": [
+    "dist/**"
+  ],
+  "source": "src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "concurrently \"tsup src/index.ts --format esm,cjs --watch --dts --external react\" \"yarn css --watch\"",
+    "build": "tsup src/index.ts --format esm,cjs --dts --external react",
+    "css": "postcss src/styles/{base,style}.css --config ./postcss.config.js --dir dist",
+    "css-watch": "yarn css --watch",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "test": "jest --watchAll",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@xstate/react": "3.0.1",
+    "xstate": "4.34.0",
+    "zustand": "4.3.3",
+    "graphite-core": "*"
+  },
+  "devDependencies": {
+    "@types/jest": "29.2.2",
+    "@types/node": "18.11.7",
+    "@types/react": "18.0.24",
+    "eslint": "8.26.0",
+    "eslint-config-custom": "*",
+    "jest": "29.2.2",
+    "postcss": "8.4.18",
+    "react": "18.2.0",
+    "ts-jest": "29.0.3",
+    "ts-node": "10.9.1",
+    "tsconfig": "*",
+    "tsup": "6.3.0",
+    "typescript": "4.8.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

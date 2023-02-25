@@ -1,5 +1,14 @@
 {
-    "extends": "../base/tsconfig/react.json",
-    "include": ["."],
-    "exclude": ["node_modules", "dist"],
-  }
+  "compilerOptions": {
+    "lib": ["es2021"],
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true
+  },
+  "include": ["./src"],
+  "exclude": ["./src/**/*.spec.ts", "./src/**/*.test.ts", "node_modules", "dist"]
+}

@@ -1,9 +1,5 @@
-const withTM = require("next-transpile-modules")([
-  // Add "math-helpers" to this array:
-  "graphite",
-]);
- 
+const withTM = require('next-transpile-modules')(['graphite-react', 'graphite-core']);
 
 module.exports = withTM({
   reactStrictMode: true,
-})
+});
