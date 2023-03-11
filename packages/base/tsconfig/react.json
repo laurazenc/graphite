@@ -4,11 +4,8 @@
   "extends": "./common.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "lib": ["dom", "esnext"],
-    "module": "esnext",
-    "target": "ESNext",
-    "outDir": "dist",
-    "downlevelIteration": true,
-    "noEmit": true
+    "lib": ["ES2015"],
+    "module": "ESNext",
+    "target": "es6"
   }
 }

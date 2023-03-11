@@ -17,18 +17,17 @@
         "monorepo",
         "turborepo"
     ],
+    "main": "./dist/index.js",
+    "source": "./src/index.ts",
+    "types": "./dist/index.d.ts",
     "files": [
         "dist/**"
     ],
-    "source": "src/index.ts",
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
     "sideEffects": false,
     "license": "MIT",
     "scripts": {
-        "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
-        "build": "tsup src/index.ts --format esm,cjs --dts",
+        "dev": "tsc -w",
+        "build": "tsc",
         "lint": "eslint \"src/**/*.ts*\"",
         "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
         "test": "jest --watchAll",

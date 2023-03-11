@@ -18,15 +18,16 @@
     "monorepo",
     "turborepo"
   ],
-  "files": [
-    "dist/**"
+  "sideEffects": [
+    "*.css"
   ],
-  "source": "src/index.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
   "license": "MIT",
-  "sideEffects": false,
   "scripts": {
     "dev": "concurrently \"tsup src/index.ts --format esm,cjs --watch --dts --external react\" \"yarn css --watch\"",
     "build": "tsup src/index.ts --format esm,cjs --dts --external react",

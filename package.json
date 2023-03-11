@@ -15,21 +15,21 @@
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "eslint-config-custom": "*",
     "@typescript-eslint/eslint-plugin": "5.41.0",
     "@typescript-eslint/parser": "5.41.0",
+    "autoprefixer": "10.4.13",
+    "concurrently": "7.5.0",
+    "eslint": "8.26.0",
+    "eslint-config-custom": "*",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react": "7.31.10",
-    "eslint": "8.26.0",
-    "prettier": "2.7.1",
-    "turbo": "1.6.2",
     "postcss": "8.4.18",
     "postcss-cli": "10.0.0",
+    "postcss-combine-duplicated-selectors": "10.0.3",
     "postcss-import": "15.0.0",
     "postcss-nested": "6.0.0",
-    "postcss-combine-duplicated-selectors": "10.0.3",
-    "autoprefixer": "10.4.13",
-    "concurrently": "7.5.0"
+    "prettier": "2.7.1",
+    "turbo": "latest"
   },
   "packageManager": "yarn@1.22.17"
 }
