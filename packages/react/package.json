@@ -43,6 +43,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
+    "@emotion/react": "11.10.6",
     "@xstate/react": "3.0.1",
     "graphite-core": "*",
     "mobx-react-lite": "3.4.3",

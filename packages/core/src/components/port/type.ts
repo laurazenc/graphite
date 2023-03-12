@@ -12,6 +12,7 @@ export enum Side {
   LEFT = 'left',
 }
 
+export type SideType = keyof typeof Side;
 export type PortProps = { type: Type; side: Side; nodeId: Node['id'] };
 export type InputPortProps = Omit<PortProps, 'type'>;
 export type OutputPortProps = Omit<PortProps, 'type'>;

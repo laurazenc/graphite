@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Coordinate, GraphiteStore, Node, Size } from 'graphite-core';
 import { Graphite, GraphiteProvider } from 'graphite-react';
+import { Side } from 'graphite-core/dist/components/port/type';
 
 const store = new GraphiteStore();
 
@@ -15,6 +16,9 @@ const nodeB: Node = new Node({
   size: Size.create(100, 100),
   coordinate: Coordinate.create(150, 150),
 });
+
+nodeA.addOutputs([{ nodeId: nodeB.id, side: Side.RIGHT }]);
+nodeB.addInputs([{ nodeId: nodeA.id, side: Side.LEFT }]);
 
 store.addNode(nodeA);
 store.addNode(nodeB);

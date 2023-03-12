@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
+import { Side } from 'graphite-core';
 
 import { NodeProps } from './types';
 import { useStore } from '../../store/useStore';
+import { Port } from '../Port/Port';
 
 const Node = observer(({ node }: NodeProps) => {
   const nodeRef = useRef<HTMLDivElement>(null);
@@ -20,6 +22,7 @@ const Node = observer(({ node }: NodeProps) => {
     [node],
   );
 
+  const filledSides = node.getFilledSides();
   return (
     <Draggable
       nodeRef={nodeRef}
@@ -29,6 +32,9 @@ const Node = observer(({ node }: NodeProps) => {
     >
       <div ref={nodeRef} className="node handle">
         <div className="node-content">{node.name}</div>
+        {filledSides.map((side, index) => {
+          return <Port key={index} side={side} />;
+        })}
       </div>
     </Draggable>
   );

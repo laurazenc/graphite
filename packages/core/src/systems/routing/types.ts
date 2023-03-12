@@ -1,5 +1,6 @@
 import { Rectangle } from './rectangle';
 import { Coordinate } from '../../components';
+import { Side } from '../../components/port';
 
 export interface Size {
   width: number;
@@ -21,21 +22,12 @@ export interface Line {
   b: Coordinate;
 }
 
-export type Side = keyof typeof SIDE;
-
 export interface Point {
   node: string;
   side: Side;
 }
 
 export type Direction = 'v' | 'h';
-
-export enum SIDE {
-  LEFT = 'LEFT',
-  TOP = 'TOP',
-  RIGHT = 'RIGHT',
-  BOTTOM = 'BOTTOM',
-}
 
 export interface Vertex {
   rect: Rectangle;

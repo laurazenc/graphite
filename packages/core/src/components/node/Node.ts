@@ -3,7 +3,7 @@ import { InputPort, OutputPort } from '../port';
 import { Size, SizeProps } from '../size';
 import { Coordinate, CoordinateProps } from '../coordinate';
 import { action, makeObservable, observable } from 'mobx';
-import { InputPortProps, OutputPortProps, Side } from '../port/type';
+import { InputPortProps, OutputPortProps, Side } from '../port';
 
 class Node {
   id = uuid();
