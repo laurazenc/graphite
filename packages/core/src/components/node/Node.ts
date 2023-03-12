@@ -1,8 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import { InputPort, OutputPort } from '../port';
-import { Size } from '../size';
-import { Coordinate } from '../coordinate';
+import { Size, SizeProps } from '../size';
+import { Coordinate, CoordinateProps } from '../coordinate';
 import { action, makeObservable, observable } from 'mobx';
+import { InputPortProps, OutputPortProps, Side } from '../port/type';
 
 class Node {
   id = uuid();
@@ -20,16 +21,16 @@ class Node {
     coordinate,
   }: {
     name: string;
-    inputs?: InputPort[];
-    outputs?: OutputPort[];
-    size: Size;
-    coordinate: Coordinate;
+    inputs?: InputPortProps[];
+    outputs?: OutputPortProps[];
+    size: SizeProps;
+    coordinate: CoordinateProps;
   }) {
     this.name = name;
     this.addInputs(inputs);
     this.addOutputs(outputs);
-    this.size = size;
-    this.coordinate = coordinate;
+    this.size = new Size(size);
+    this.coordinate = new Coordinate(coordinate);
 
     makeObservable(this, {
       id: observable,
@@ -43,14 +44,14 @@ class Node {
     });
   }
 
-  private addInputs(inputs: InputPort[] = []) {
-    inputs.forEach((input: InputPort) => {
+  private addInputs(inputs: InputPortProps[] = []) {
+    inputs.forEach((input: InputPortProps) => {
       this.inputs.push(new InputPort(input));
     });
   }
 
-  private addOutputs(outputs: OutputPort[]) {
-    outputs.forEach((output: OutputPort) => {
+  private addOutputs(outputs: OutputPortProps[]) {
+    outputs.forEach((output: OutputPortProps) => {
       this.outputs.push(new OutputPort(output));
     });
   }
@@ -61,6 +62,17 @@ class Node {
 
   public getOutputs() {
     return this.outputs;
+  }
+
+  public getFilledSides(): Side[] {
+    const sides = new Map<Side, Side>();
+    this.inputs.forEach((port) => {
+      sides.set(port.side, port.side);
+    });
+    this.outputs.forEach((port) => {
+      sides.set(port.side, port.side);
+    });
+    return Array.from(sides.values());
   }
 }
 
