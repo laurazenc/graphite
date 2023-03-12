@@ -14,7 +14,8 @@
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "graphite-react": "*"
+    "graphite-react": "*",
+    "graphite-core": "*"
   },
   "devDependencies": {
     "@babel/core": "7.19.6",

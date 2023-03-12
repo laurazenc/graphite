@@ -1,5 +1,6 @@
-import { Coordinate, Direction } from './types';
+import { Direction } from './types';
 import { distance as calculateDistance } from './distance';
+import { Coordinate } from '../../components';
 
 class PointNode {
   public distance = Infinity;

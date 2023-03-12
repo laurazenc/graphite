@@ -1,12 +1,9 @@
 import React from 'react';
 
-import '../../styles/style.css';
-import { GraphiteStoreProvider } from '../../store/GraphiteStoreProvider';
 import { Grid } from '../../components/Grid/Grid';
 import { NodeRenderer } from '../NodeRenderer/NodeRenderer';
 import { Connector, Screen } from '../../components';
-import { Rectangle, Vertex } from 'graphite-core/src/routing';
-
+/*
 const a: Vertex = {
   rect: Rectangle.fromRect({ left: 50, top: 50, height: 60, width: 90 }),
   side: 'LEFT',
@@ -30,20 +27,18 @@ const connectorAB = {
 const connectorBC = {
   source: b,
   target: c,
-};
+};*/
 
 const Graphite = () => {
   // const graph = createGraph({ nodes: [a, b, c], connectors: [connectorAB, connectorBC] });
   return (
     <div className="container">
-      <GraphiteStoreProvider>
-        <Grid />
-        <Screen>
-          <NodeRenderer />
-          <Connector source={a} target={b} />
-          <Connector source={b} target={c} />
-        </Screen>
-      </GraphiteStoreProvider>
+      <Grid />
+      <Screen>
+        <NodeRenderer />
+        {/*<Connector source={a} target={b} />
+        <Connector source={b} target={c} />*/}
+      </Screen>
     </div>
   );
 };

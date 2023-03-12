@@ -1,6 +1,7 @@
 import { pathFinder } from './path-finder';
 import { Rectangle } from './rectangle';
-import { Coordinate, Vertex } from './types';
+import { Vertex } from './types';
+import { Coordinate } from '../../components';
 
 const source: Vertex = {
   rect: Rectangle.fromRect({ left: 50, top: 50, height: 60, width: 90 }),
@@ -35,7 +36,7 @@ describe('Path Finder', () => {
         x: 295,
         y: 160,
       },
-    ];
+    ] as Coordinate[];
     const path = pathFinder(source, target);
     expect(path).toEqual(expectedPath);
   });

@@ -44,9 +44,10 @@
   },
   "dependencies": {
     "@xstate/react": "3.0.1",
-    "xstate": "4.34.0",
-    "zustand": "4.3.3",
-    "graphite-core": "*"
+    "graphite-core": "*",
+    "mobx-react-lite": "3.4.3",
+    "react-draggable": "4.4.5",
+    "xstate": "4.34.0"
   },
   "devDependencies": {
     "@types/jest": "29.2.2",

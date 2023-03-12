@@ -1,4 +1,5 @@
 import { Rectangle } from './rectangle';
+import { Coordinate } from '../../components';
 
 export interface Size {
   width: number;
@@ -8,11 +9,6 @@ export interface Size {
 export interface Rect extends Size {
   left: number;
   top: number;
-}
-
-export interface Coordinate {
-  x: number;
-  y: number;
 }
 
 export interface Connection {

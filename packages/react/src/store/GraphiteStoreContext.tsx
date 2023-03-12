@@ -1,6 +1,14 @@
 import { createContext } from 'react';
-import { initStore } from './store';
+import { GraphiteStore } from 'graphite-core';
 
-const StoreContext = createContext<ReturnType<typeof initStore> | null>(null);
+export type StoreProviderValue = {
+  store: GraphiteStore;
+};
+
+const defaultStoreProviderValue: StoreProviderValue = {
+  store: new GraphiteStore(),
+};
+
+const StoreContext = createContext(defaultStoreProviderValue);
 
 export default StoreContext;

@@ -1,26 +1,17 @@
-import { Node } from '../../components';
 import { useStore } from '../../store/useStore';
+import { Node as _Node } from 'graphite-core';
+import { Node } from '../../components';
 
 function NodeRenderer() {
-  const { getState } = useStore();
-  const nodes = getState().nodes;
+  const { store } = useStore();
+  const { nodes } = store;
+
   return (
-    <div className="node-renderer">
-      {nodes.map((node, i) => {
-        return (
-          <Node
-            x={node.rect.left}
-            y={node.rect.top}
-            id={`node-${i}`}
-            key={`node-${i}`}
-            width={node.rect.width}
-            height={node.rect.height}
-          >
-            {`Node ${i}`}
-          </Node>
-        );
+    <>
+      {Array.from(nodes.values()).map((node: _Node) => {
+        return <Node node={node} key={node.id} />;
       })}
-    </div>
+    </>
   );
 }
 

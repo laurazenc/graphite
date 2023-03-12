@@ -1,5 +1,6 @@
-import { Coordinate, Line } from './types';
+import { Line } from './types';
 import { PointGraph } from './graph';
+import { Coordinate } from '../../components';
 
 function buildGraph(points: Coordinate[]): { graph: PointGraph; connections: Line[] } {
   const hotXs: number[] = [];
@@ -21,12 +22,12 @@ function buildGraph(points: Coordinate[]): { graph: PointGraph; connections: Lin
 
   for (let i = 0; i < hotYs.length; i++) {
     for (let j = 0; j < hotXs.length; j++) {
-      const b = { x: hotXs[j], y: hotYs[i] };
+      const b = new Coordinate({ x: hotXs[j], y: hotYs[i] });
 
       if (!inHotIndex(b)) continue;
 
       if (j > 0) {
-        const a = { x: hotXs[j - 1], y: hotYs[i] };
+        const a = new Coordinate({ x: hotXs[j - 1], y: hotYs[i] });
 
         if (inHotIndex(a)) {
           graph.connect(a, b);
@@ -36,7 +37,7 @@ function buildGraph(points: Coordinate[]): { graph: PointGraph; connections: Lin
       }
 
       if (i > 0) {
-        const a = { x: hotXs[j], y: hotYs[i - 1] };
+        const a = new Coordinate({ x: hotXs[j], y: hotYs[i - 1] });
 
         if (inHotIndex(a)) {
           graph.connect(a, b);

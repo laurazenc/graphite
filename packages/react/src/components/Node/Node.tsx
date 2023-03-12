@@ -1,58 +1,38 @@
-import { useEffect, useRef, MouseEvent, MouseEventHandler, HTMLAttributes, DetailedHTMLProps } from 'react';
-import { useMachine } from '@xstate/react';
-import nodeDragAndDropMachine from '../../machines/nodeDragAndDropMachine';
+import React, { useRef } from 'react';
+import { observer } from 'mobx-react-lite';
+import Draggable, { DraggableEventHandler } from 'react-draggable';
+
 import { NodeProps } from './types';
+import { useStore } from '../../store/useStore';
 
-const Node = ({ children, x, y, width, height, ...rest }: NodeProps) => {
+const Node = observer(({ node }: NodeProps) => {
   const nodeRef = useRef<HTMLDivElement>(null);
-  const [state, send] = useMachine(nodeDragAndDropMachine);
+  const { store } = useStore();
 
-  useEffect(() => {
-    if (!nodeRef.current) return;
-    send('SET_POS', { x, y });
-  }, [send, x, y]);
-
-  const onMouseDownHandler = (event: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>): void => {
-    send(event as any);
-  };
-  const onMouseLeaveHandler = (event: MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    if (state.value !== 'idle') {
-      send(event as any);
-    }
-  };
-  const onMouseUpHandler = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    send(event as any);
-  };
-  const onMouseMoveHandler = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    if (state.value !== 'idle') {
-      send(event as any);
-    }
-  };
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return (
-    <div
-      className="node"
-      ref={nodeRef}
-      style={{
-        left: state.context.x,
-        top: state.context.y,
-        cursor: state.value === 'dragging' ? 'grabbing' : 'pointer',
-        width: `${width}px`,
-        height: `${height}px`,
-      }}
-      role="button"
-      onMouseDown={onMouseDownHandler as any}
-      onMouseLeave={onMouseLeaveHandler as any}
-      onMouseMove={onMouseMoveHandler as any}
-      onMouseUp={onMouseUpHandler as any}
-      {...rest}
-    >
-      {children}
-    </div>
+  const handleOnDrag: DraggableEventHandler = React.useCallback(
+    (e, { deltaX, deltaY }) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const storedNode = store.getNodeById(node.id);
+      storedNode.coordinate.setX(storedNode.coordinate.x + deltaX);
+      storedNode.coordinate.setY(storedNode.coordinate.y + deltaY);
+    },
+    [node],
   );
-};
+
+  return (
+    <Draggable
+      nodeRef={nodeRef}
+      onDrag={handleOnDrag}
+      handle=".handle"
+      position={{ x: node.coordinate.x, y: node.coordinate.y }}
+    >
+      <div ref={nodeRef} className="node handle">
+        <div className="node-content">{node.name}</div>
+      </div>
+    </Draggable>
+  );
+});
 
 Node.displayName = 'Node';
 

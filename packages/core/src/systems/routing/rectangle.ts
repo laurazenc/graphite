@@ -1,4 +1,5 @@
-import { Coordinate, Rect, Side } from './types';
+import { Rect, Side } from './types';
+import { Coordinate } from '../../components';
 
 class Rectangle {
   constructor(readonly left: number, readonly top: number, readonly width: number, readonly height: number) {}
@@ -26,7 +27,7 @@ class Rectangle {
         point = { x: this.right, y: this.top + this.height / 2 };
         break;
     }
-    return point;
+    return Coordinate.create(point.x, point.y);
   }
 
   contains(p: Coordinate): boolean {
