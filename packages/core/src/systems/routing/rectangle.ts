@@ -1,5 +1,5 @@
-import { Rect, Side } from './types';
-import { Coordinate } from '../../components';
+import { Rect } from './types';
+import { Coordinate, CoordinateProps, Side } from '../../components';
 
 class Rectangle {
   constructor(readonly left: number, readonly top: number, readonly width: number, readonly height: number) {}
@@ -7,30 +7,26 @@ class Rectangle {
     return new Rectangle(r.left, r.top, r.width, r.height);
   }
 
-  static fromOrth(left: number, top: number, right: number, bottom: number): Rectangle {
-    return new Rectangle(left, top, right - left, bottom - top);
-  }
-
-  startPoint(side: Side): Coordinate {
+  startPoint(side: Side): CoordinateProps {
     let point = { x: 0, y: 0 };
     switch (side) {
-      case 'TOP':
-        point = { x: this.left + this.right / 2, y: this.top };
+      case Side.TOP:
+        point = { x: this.left + this.width / 2, y: this.top };
         break;
-      case 'BOTTOM':
+      case Side.BOTTOM:
         point = { x: this.left + this.width / 2, y: this.bottom };
         break;
-      case 'LEFT':
+      case Side.LEFT:
         point = { x: this.left, y: this.top + this.height / 2 };
         break;
-      case 'RIGHT':
+      case Side.RIGHT:
         point = { x: this.right, y: this.top + this.height / 2 };
         break;
     }
     return Coordinate.create(point.x, point.y);
   }
 
-  contains(p: Coordinate): boolean {
+  contains(p: CoordinateProps): boolean {
     return p.x >= this.left && p.x <= this.right && p.y >= this.top && p.y <= this.bottom;
   }
 

@@ -1,19 +1,19 @@
 import { Direction } from './types';
 import { distance as calculateDistance } from './distance';
-import { Coordinate } from '../../components';
+import { Coordinate, CoordinateProps } from '../../components';
 
 class PointNode {
   public distance = Infinity;
   public shortestPath: PointNode[] = [];
   public adjacentNodes: Map<PointNode, number> = new Map();
 
-  constructor(public data: Coordinate) {}
+  constructor(public data: CoordinateProps) {}
 }
 
 class PointGraph {
   private index: { [x: string]: { [y: string]: PointNode } } = {};
 
-  add(p: Coordinate) {
+  add(p: CoordinateProps) {
     const { x, y } = p;
     const xs = x.toString(),
       ys = y.toString();
@@ -44,7 +44,7 @@ class PointGraph {
     nodeA.adjacentNodes.set(nodeB, calculateDistance(a, b));
   }
 
-  get(p: Coordinate): PointNode {
+  get(p: CoordinateProps): PointNode {
     const { x, y } = p;
     let point = null;
     const xs = x.toString(),
@@ -86,7 +86,7 @@ class PointGraph {
     return this.directionOf(a.data, b.data);
   }
 
-  private directionOf(a: Coordinate, b: Coordinate): Direction | null {
+  private directionOf(a: CoordinateProps, b: CoordinateProps): Direction | null {
     if (a.x === b.x) {
       return 'h';
     } else if (a.y === b.y) {
@@ -136,7 +136,11 @@ class PointGraph {
   }
 }
 
-export function shortestPath(graph: PointGraph, origin: Coordinate, destination: Coordinate): Coordinate[] {
+export function shortestPath(
+  graph: PointGraph,
+  origin: CoordinateProps,
+  destination: CoordinateProps,
+): CoordinateProps[] {
   const originNode = graph.get(origin);
   const destinationNode = graph.get(destination);
 

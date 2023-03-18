@@ -1,8 +1,8 @@
 import { Line } from './types';
 import { PointGraph } from './graph';
-import { Coordinate } from '../../components';
+import { Coordinate, CoordinateProps } from '../../components';
 
-function buildGraph(points: Coordinate[]): { graph: PointGraph; connections: Line[] } {
+function buildGraph(points: CoordinateProps[]): { graph: PointGraph; connections: Line[] } {
   const hotXs: number[] = [];
   const hotYs: number[] = [];
   const graph = new PointGraph();

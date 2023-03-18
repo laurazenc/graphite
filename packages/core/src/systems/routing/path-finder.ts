@@ -1,7 +1,8 @@
-import { Coordinate, Vertex } from './types';
+import { Vertex } from './types';
 import { shortestPath } from './graph';
 import { Rectangle } from './rectangle';
 import { buildGraph } from './build-graph';
+import { CoordinateProps } from '../../components';
 
 const MIN_SPACE = 10;
 
@@ -36,7 +37,7 @@ function getRulers(source: Rectangle, target: Rectangle) {
 type BasicCardinalPoint = 'n' | 'e' | 's' | 'w';
 type BendDirection = BasicCardinalPoint | 'unknown' | 'none';
 
-function getBend(a: Coordinate, b: Coordinate, c: Coordinate): BendDirection {
+function getBend(a: CoordinateProps, b: CoordinateProps, c: CoordinateProps): BendDirection {
   const equalX = a.x === b.x && b.x === c.x;
   const equalY = a.y === b.y && b.y === c.y;
   const segment1Horizontal = a.y === b.y;
@@ -61,12 +62,12 @@ function getBend(a: Coordinate, b: Coordinate, c: Coordinate): BendDirection {
   throw new Error('Nope');
 }
 
-function simplifyPath(points: Coordinate[]): Coordinate[] {
+function simplifyPath(points: CoordinateProps[]): CoordinateProps[] {
   if (points.length <= 2) {
     return points;
   }
 
-  const r: Coordinate[] = [points[0]];
+  const r: CoordinateProps[] = [points[0]];
   for (let i = 1; i < points.length; i++) {
     const cur = points[i];
 
@@ -89,7 +90,7 @@ function simplifyPath(points: Coordinate[]): Coordinate[] {
 export function pathFinder(source: Vertex, target: Vertex) {
   const pointA = source.rect.startPoint(source.side);
   const pointB = target.rect.startPoint(target.side);
-  const points: Coordinate[] = [];
+  const points: CoordinateProps[] = [];
 
   // Rulers
   const [horizontalRulers, verticalRulers] = getRulers(source.rect, target.rect);
@@ -97,7 +98,7 @@ export function pathFinder(source: Vertex, target: Vertex) {
   // Points
   for (const y of horizontalRulers) {
     for (const x of verticalRulers) {
-      const point = { x, y };
+      const point: CoordinateProps = { x, y };
       const collision = [source.rect, target.rect].filter((o) => o.contains(point));
 
       if (!collision.length) {
@@ -110,7 +111,6 @@ export function pathFinder(source: Vertex, target: Vertex) {
   points.push(pointB);
 
   const { graph, connections } = buildGraph(points);
-
   const path = shortestPath(graph, pointA, pointB);
 
   if (path.length > 0) {

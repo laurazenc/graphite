@@ -1,3 +1,2 @@
-export { default as InputPort } from './InputPort';
-export { default as OutputPort } from './OutputPort';
+export { default as Port } from './Port';
 export * from './type';

@@ -1,9 +1,9 @@
-import { Coordinate, distance, pathFinder } from 'graphite-core';
-import { CommandFn, ConnectorProps } from './types';
+import { CoordinateProps, distance } from 'graphite-core';
+import { CommandFn } from './types';
 
 const RADIUS = 8;
 
-function generateSVGPath(points: Coordinate[], command: CommandFn): string {
+export function generateSVGPath(points: CoordinateProps[], command: CommandFn): string {
   return points.reduce((acc, point, i, a) => {
     let segment: string;
 
@@ -18,7 +18,7 @@ function generateSVGPath(points: Coordinate[], command: CommandFn): string {
   }, '');
 }
 
-const controlPoint = (current: Coordinate, previous: Coordinate, next: Coordinate, reverse: boolean) => {
+const controlPoint = (current: CoordinateProps, previous: CoordinateProps, next: CoordinateProps, reverse: boolean) => {
   // When 'current' is the first or last point of the array
   // 'previous' or 'next' don't exist.
   // Replace with 'current'
@@ -37,7 +37,7 @@ const controlPoint = (current: Coordinate, previous: Coordinate, next: Coordinat
   return [x, y];
 };
 
-const line = (pointA: Coordinate, pointB: Coordinate) => {
+const line = (pointA: CoordinateProps, pointB: CoordinateProps) => {
   const lengthX = pointB.x - pointA.x;
   const lengthY = pointB.y - pointA.y;
   return {
@@ -46,9 +46,9 @@ const line = (pointA: Coordinate, pointB: Coordinate) => {
   };
 };
 
-const lineCommand: CommandFn = (point: Coordinate) => `L ${point.x} ${point.y}`;
+const lineCommand: CommandFn = (point: CoordinateProps) => `L ${point.x} ${point.y}`;
 
-const bezierCommand: CommandFn = (point: Coordinate, i: number, a: Coordinate[]): string => {
+const bezierCommand: CommandFn = (point: CoordinateProps, i: number, a: CoordinateProps[]): string => {
   // start control point
   const [cpsX, cpsY] = controlPoint(a[i - 1], a[i - 2], point, false);
   // end control point
@@ -56,10 +56,10 @@ const bezierCommand: CommandFn = (point: Coordinate, i: number, a: Coordinate[])
   return `C ${cpsX},${cpsY} ${cpeX},${cpeY} ${point.x},${point.y}`;
 };
 
-const smoothStepCommand: CommandFn = (point: Coordinate, i: number, a: Coordinate[]): string => {
-  const start = a[i - 1];
-  const middle = point;
-  const end = a[i + 1];
+const smoothStepCommand: CommandFn = (point: CoordinateProps, i: number, a: CoordinateProps[]): string => {
+  const start: CoordinateProps = a[i - 1];
+  const middle: CoordinateProps = point;
+  const end: CoordinateProps = a[i + 1];
 
   const bendSize = Math.min(distance(start, middle) / 2, distance(middle, end) / 2, RADIUS);
   const { x, y } = middle;
@@ -79,23 +79,4 @@ const smoothStepCommand: CommandFn = (point: Coordinate, i: number, a: Coordinat
   return `L ${x},${y + bendSize * yDir}Q ${x},${y} ${x + bendSize * xDir},${y}`;
 };
 
-const Connector = ({ source, target }: ConnectorProps) => {
-  const path = pathFinder(source, target);
-  const svgPath = generateSVGPath(path, smoothStepCommand);
-
-  return (
-    <svg
-      style={{
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        top: 0,
-        left: 0,
-      }}
-    >
-      <path d={svgPath} fill="none" stroke="grey" />
-    </svg>
-  );
-};
-
-export { Connector };
+export { lineCommand, bezierCommand, smoothStepCommand };

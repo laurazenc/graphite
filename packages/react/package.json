@@ -46,6 +46,7 @@
     "@emotion/react": "11.10.6",
     "@xstate/react": "3.0.1",
     "graphite-core": "*",
+    "mobx": "6.8.0",
     "mobx-react-lite": "3.4.3",
     "react-draggable": "4.4.5",
     "xstate": "4.34.0"

@@ -1,10 +1,5 @@
 import { Node } from '../node';
 
-export enum Type {
-  INPUT = 'input',
-  OUTPUT = 'output',
-}
-
 export enum Side {
   TOP = 'top',
   RIGHT = 'right',
@@ -13,6 +8,4 @@ export enum Side {
 }
 
 export type SideType = keyof typeof Side;
-export type PortProps = { type: Type; side: Side; nodeId: Node['id'] };
-export type InputPortProps = Omit<PortProps, 'type'>;
-export type OutputPortProps = Omit<PortProps, 'type'>;
+export type PortProps = { side: Side; node: Node };

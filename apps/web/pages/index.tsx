@@ -1,27 +1,31 @@
 import Head from 'next/head';
-import { Coordinate, GraphiteStore, Node, Size } from 'graphite-core';
+import { GraphiteStore, Size } from 'graphite-core';
 import { Graphite, GraphiteProvider } from 'graphite-react';
-import { Side } from 'graphite-core/dist/components/port/type';
 
 const store = new GraphiteStore();
 
-const nodeA: Node = new Node({
+const nodeA = store.addNode({
   name: 'A',
   size: Size.create(100, 100),
-  coordinate: Coordinate.create(50, 50),
+  coordinates: { x: 50, y: 50 },
 });
-
-const nodeB: Node = new Node({
+const nodeB = store.addNode({
   name: 'B',
   size: Size.create(100, 100),
-  coordinate: Coordinate.create(150, 150),
+  coordinates: { x: 300, y: 150 },
+});
+const nodeC = store.addNode({
+  name: 'C',
+  size: Size.create(100, 100),
+  coordinates: { x: 600, y: 300 },
 });
 
-nodeA.addOutputs([{ nodeId: nodeB.id, side: Side.RIGHT }]);
-nodeB.addInputs([{ nodeId: nodeA.id, side: Side.LEFT }]);
+const portsA = store.getNodePorts(nodeA.id);
+const portsB = store.getNodePorts(nodeB.id);
+const portsC = store.getNodePorts(nodeC.id);
 
-store.addNode(nodeA);
-store.addNode(nodeB);
+portsA[1].connect(portsB[0]);
+portsA[2].connect(portsC[3]);
 
 export default function Web() {
   return (

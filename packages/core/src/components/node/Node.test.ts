@@ -1,12 +1,25 @@
 import { Node } from './index';
-import { Side } from '../port/type';
+import { Side, Type } from '../port';
+
+const nodeA = new Node({
+  name: 'A',
+  inputs: [],
+  outputs: [],
+  size: { width: 100, height: 100 },
+});
+
+const nodeB = new Node({
+  name: 'A',
+  inputs: [],
+  outputs: [],
+  size: { width: 100, height: 100 },
+});
 
 describe('Node', () => {
   it('should handle inputs and outputs', () => {
     const node = new Node({
       name: 'My node',
       size: { width: 100, height: 100 },
-      coordinate: { x: 40, y: 50 },
     });
 
     expect(node.id).toBeDefined();
@@ -18,7 +31,6 @@ describe('Node', () => {
     const node = new Node({
       name: 'My node',
       size: { width: 100, height: 100 },
-      coordinate: { x: 40, y: 50 },
     });
     node.size.setWidth(600);
     expect(node.size.width).toEqual(600);
@@ -29,9 +41,8 @@ describe('Node', () => {
       const node = new Node({
         name: 'My node',
         size: { width: 100, height: 100 },
-        coordinate: { x: 40, y: 50 },
-        inputs: [{ nodeId: '1', side: Side.TOP }],
-        outputs: [{ nodeId: '2', side: Side.TOP }],
+        inputs: [{ node: nodeA, side: Side.TOP, type: Type.INPUT }],
+        outputs: [{ node: nodeB, side: Side.TOP, type: Type.OUTPUT }],
       });
 
       expect(node.getFilledSides()).toEqual([Side.TOP]);
@@ -40,14 +51,13 @@ describe('Node', () => {
       const node = new Node({
         name: 'My node',
         size: { width: 100, height: 100 },
-        coordinate: { x: 40, y: 50 },
         inputs: [
-          { nodeId: '1', side: Side.TOP },
-          { nodeId: '2', side: Side.RIGHT },
+          { node: nodeA, side: Side.TOP, type: Type.INPUT },
+          { node: nodeB, side: Side.RIGHT, type: Type.INPUT },
         ],
         outputs: [
-          { nodeId: '3', side: Side.BOTTOM },
-          { nodeId: '4', side: Side.LEFT },
+          { node: nodeA, side: Side.BOTTOM, type: Type.OUTPUT },
+          { node: nodeB, side: Side.LEFT, type: Type.OUTPUT },
         ],
       });
 

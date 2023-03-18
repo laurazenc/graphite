@@ -9,5 +9,5 @@ interface PortProps {
 
 export const Port: FC<PortProps> = observer(({ side }) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  return <div ref={ref} className="node-port" css={portStyle(side)} />;
+  return <div ref={ref} className={`node-port`} css={portStyle(side)} />;
 });

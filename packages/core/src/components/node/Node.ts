@@ -1,78 +1,51 @@
 import { v4 as uuid } from 'uuid';
-import { InputPort, OutputPort } from '../port';
-import { Size, SizeProps } from '../size';
-import { Coordinate, CoordinateProps } from '../coordinate';
-import { action, makeObservable, observable } from 'mobx';
-import { InputPortProps, OutputPortProps, Side } from '../port';
+import { Port, Side } from '../port';
+import { Size } from '../size';
+import { makeAutoObservable } from 'mobx';
+import { Connection } from '../connection';
+import { NodeConstructorArgs } from './types';
 
 class Node {
   id = uuid();
   name: string;
-  inputs: InputPort[] = [];
-  outputs: OutputPort[] = [];
+  ports: Port[] = [];
   size: Size;
-  coordinate: Coordinate;
 
-  constructor({
-    name,
-    inputs = [],
-    outputs = [],
-    size,
-    coordinate,
-  }: {
-    name: string;
-    inputs?: InputPortProps[];
-    outputs?: OutputPortProps[];
-    size: SizeProps;
-    coordinate: CoordinateProps;
-  }) {
+  constructor({ name, size }: NodeConstructorArgs) {
     this.name = name;
-    this.addInputs(inputs);
-    this.addOutputs(outputs);
     this.size = new Size(size);
-    this.coordinate = new Coordinate(coordinate);
+    this.generatePorts();
 
-    makeObservable(this, {
-      id: observable,
-      name: observable,
-      inputs: observable,
-      outputs: observable,
-      size: observable,
-      coordinate: observable,
-      getInputs: action,
-      getOutputs: action,
-    });
+    makeAutoObservable(this);
   }
 
-  private addInputs(inputs: InputPortProps[] = []) {
-    inputs.forEach((input: InputPortProps) => {
-      this.inputs.push(new InputPort(input));
-    });
+  private generatePorts() {
+    this.ports.push(new Port({ node: this, side: Side.TOP }));
+    this.ports.push(new Port({ node: this, side: Side.RIGHT }));
+    this.ports.push(new Port({ node: this, side: Side.BOTTOM }));
+    this.ports.push(new Port({ node: this, side: Side.LEFT }));
   }
 
-  private addOutputs(outputs: OutputPortProps[]) {
-    outputs.forEach((output: OutputPortProps) => {
-      this.outputs.push(new OutputPort(output));
-    });
-  }
-
-  public getInputs() {
-    return this.inputs;
-  }
-
-  public getOutputs() {
-    return this.outputs;
+  public getPorts() {
+    return this.ports;
   }
 
   public getFilledSides(): Side[] {
     const sides = new Map<Side, Side>();
-    this.inputs.forEach((port) => {
-      sides.set(port.side, port.side);
-    });
-    this.outputs.forEach((port) => {
+    this.ports.forEach((port) => {
       sides.set(port.side, port.side);
     });
     return Array.from(sides.values());
+  }
+
+  public get connections(): Connection[] {
+    return [...this.ports]
+      .flatMap((port) => {
+        return port.connections;
+      })
+      .map((connection) => {
+        return connection;
+      });
   }
 }
 

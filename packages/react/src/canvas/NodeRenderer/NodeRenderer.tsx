@@ -1,18 +1,17 @@
-import { useStore } from '../../store/useStore';
 import { Node as _Node } from 'graphite-core';
 import { Node } from '../../components';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../store/useStore';
 
-function NodeRenderer() {
+const NodeRenderer = observer(() => {
   const { store } = useStore();
-  const { nodes } = store;
-
   return (
     <>
-      {Array.from(nodes.values()).map((node: _Node) => {
+      {Array.from(store.nodes.values()).map((node: _Node) => {
         return <Node node={node} key={node.id} />;
       })}
     </>
   );
-}
+});
 
 export { NodeRenderer };

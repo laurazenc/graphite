@@ -1,1 +1,1 @@
-export * from './Graphite';
+export { Graphite } from './Graphite';

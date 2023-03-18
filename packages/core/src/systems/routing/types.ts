@@ -1,6 +1,6 @@
 import { Rectangle } from './rectangle';
-import { Coordinate } from '../../components';
-import { Side } from '../../components/port';
+import { CoordinateProps } from '../../components';
+import { Side } from '../../components';
 
 export interface Size {
   width: number;
@@ -13,13 +13,13 @@ export interface Rect extends Size {
 }
 
 export interface Connection {
-  a: Coordinate;
-  b: Coordinate;
+  a: CoordinateProps;
+  b: CoordinateProps;
 }
 
 export interface Line {
-  a: Coordinate;
-  b: Coordinate;
+  a: CoordinateProps;
+  b: CoordinateProps;
 }
 
 export interface Point {
