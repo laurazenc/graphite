@@ -1,7 +1,7 @@
 import { css, CSSObject } from '@emotion/react';
 import { Side } from 'graphite-core';
 
-const PORT_SIZE = 8;
+export const PORT_SIZE = 10;
 const PORT_SIZE_OFFSET = PORT_SIZE / 2;
 
 const positions: Record<Side, CSSObject> = {
@@ -19,8 +19,8 @@ export const portStyle = (side: Side) => css`
   position: absolute;
   width: ${PORT_SIZE}px;
   height: ${PORT_SIZE}px;
-  background-color: white;
-  border: 1px solid black;
+  background-color: #374151;
+  border: 2px solid white;
   border-radius: 50%;
   ${calculatePosition(side)}
 `;

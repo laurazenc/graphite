@@ -91,7 +91,6 @@ function simplifyPath(points: CoordinateProps[]): CoordinateProps[] {
 }
 
 export function pathFinder(source: Vertex, target: Vertex) {
-  console.log(source.rect, target.rect);
   const pointA = source.rect.startPoint(source.side);
   const pointB = target.rect.startPoint(target.side);
   const points: CoordinateProps[] = [];

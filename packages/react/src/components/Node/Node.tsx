@@ -4,6 +4,7 @@ import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { NodeProps } from './types';
 import { useStore } from '../../store/useStore';
 import { Port } from '../Port/Port';
+import { nodeStyle } from './Node.style';
 
 const Node = observer(({ node }: NodeProps) => {
   const nodeRef = useRef<HTMLDivElement>(null);
@@ -35,7 +36,7 @@ const Node = observer(({ node }: NodeProps) => {
   const position = store.nodePositions.get(node.id) || { x: 0, y: 0 };
   return (
     <Draggable nodeRef={nodeRef} onDrag={handleOnDrag} handle=".handle" position={{ x: position.x, y: position.y }}>
-      <div ref={nodeRef} className="node handle">
+      <div ref={nodeRef} className="node handle" css={nodeStyle}>
         <div className="node-content">{node.name}</div>
         {store.getNodePorts(node.id).map((port, index) => {
           return <Port key={index} port={port} />;
