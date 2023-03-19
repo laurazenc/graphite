@@ -7,6 +7,7 @@ class Store {
   public nodeElements: Map<Node['id'], HTMLDivElement> = new Map();
   public nodePositions: Map<Node['id'], CoordinateProps> = new Map();
   public draftConnection: Port | null = null;
+  public mousePosition: CoordinateProps = { x: 0, y: 0 };
 
   constructor() {
     makeAutoObservable(this);
@@ -60,19 +61,22 @@ class Store {
     return [...this.ports.values()].flatMap((port) => port).filter((port) => port.node.id === nodeId);
   }
 
-  @action public startConnection(from: Port) {
+  @action public startConnection(from: Port | null) {
     this.draftConnection = from;
   }
 
   @action public endConnection(to: Port) {
     if (this.draftConnection) {
-      if (to.node === this.draftConnection.node) {
-        throw new Error("Can't connect a node to itself");
+      if (to.node !== this.draftConnection.node) {
+        this.draftConnection.connect(to);
+        this.draftConnection = null;
       }
-
-      this.draftConnection.connect(to);
-      this.draftConnection = null;
     }
+  }
+
+  /* MOUSE */
+  public setMousePosition(position: CoordinateProps) {
+    this.mousePosition = position;
   }
 }
 

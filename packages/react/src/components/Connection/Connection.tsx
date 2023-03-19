@@ -5,8 +5,6 @@ import { useStore } from '../../store/useStore';
 import { autorun } from 'mobx';
 import { generateSVGPath, smoothStepCommand } from './utils';
 
-const defaultPosition = { x: 0, y: 0 };
-
 const Connection = observer(({ connection }: { connection: _Connection }) => {
   const { store } = useStore();
   const [path, setPath] = React.useState<string>('');

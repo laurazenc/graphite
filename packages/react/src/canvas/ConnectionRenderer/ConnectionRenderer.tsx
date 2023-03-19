@@ -1,8 +1,9 @@
-import { Connection as _Connection } from 'graphite-core';
-import { Connection } from '../../components/Connection/Connection';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { observer } from 'mobx-react-lite';
+import { Connection as _Connection } from 'graphite-core';
 import { useStore } from '../../store/useStore';
+import { Connection } from '../../components/Connection/Connection';
+import { ConnectionDraft } from '../../components/Connection/ConnectionDraft';
 
 const ConnectionRenderer = observer(() => {
   const connectionRef = useRef<SVGSVGElement>(null);
@@ -13,6 +14,7 @@ const ConnectionRenderer = observer(() => {
       {store.connections.map((connection: _Connection) => {
         return <Connection connection={connection} key={connection.id} />;
       })}
+      {store.draftConnection && <ConnectionDraft />}
     </svg>
   );
 });

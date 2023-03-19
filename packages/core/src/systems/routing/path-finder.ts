@@ -7,22 +7,25 @@ import { CoordinateProps } from '../../components';
 const MIN_SPACE = 10;
 
 function buildHorizontalRuler(rect: Rectangle): number[] {
+  const minState = rect.isPoint() ? 0 : MIN_SPACE;
   const horizontalRulers: number[] = [];
-  horizontalRulers.push(rect.top - MIN_SPACE);
+  horizontalRulers.push(rect.top - minState);
   horizontalRulers.push(rect.top);
   horizontalRulers.push(rect.bottom - rect.height / 2);
   horizontalRulers.push(rect.bottom);
-  horizontalRulers.push(rect.bottom + MIN_SPACE);
+  horizontalRulers.push(rect.bottom + minState);
   return horizontalRulers;
 }
 
 function buildVerticalRuler(rect: Rectangle): number[] {
   const verticalRulers: number[] = [];
-  verticalRulers.push(rect.left - MIN_SPACE);
+  const minState = rect.isPoint() ? 0 : MIN_SPACE;
+
+  verticalRulers.push(rect.left - minState);
   verticalRulers.push(rect.left);
   verticalRulers.push(rect.left + rect.width / 2);
   verticalRulers.push(rect.right);
-  verticalRulers.push(rect.right + MIN_SPACE);
+  verticalRulers.push(rect.right + minState);
   return verticalRulers;
 }
 

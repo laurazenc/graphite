@@ -30,6 +30,10 @@ class Rectangle {
     return p.x >= this.left && p.x <= this.right && p.y >= this.top && p.y <= this.bottom;
   }
 
+  isPoint(): boolean {
+    return this.width === 1 && this.height === 1;
+  }
+
   /*inflate(horizontal: number, vertical: number): Rectangle {
     return Rectangle.fromOrth(
       this.left - horizontal,

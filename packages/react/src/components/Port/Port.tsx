@@ -7,13 +7,27 @@ import { useStore } from '../../store/useStore';
 export const Port = observer(({ port }: { port: _Port }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const { store } = useStore();
-  const handleOnClick = useCallback(() => {
+  const handleOnDown = useCallback(() => {
     if (store.draftConnection) {
       store.endConnection(port);
     } else {
-      store.startConnection(port);
+      if (store.draftConnection !== port) store.startConnection(port);
     }
+  }, []);
+
+  const handleOnMouseUp = useCallback(() => {
+    /*if (store.draftConnection) {
+      store.endConnection(port);
+    }*/
   }, [port]);
 
-  return <div ref={ref} className={`node-port`} css={portStyle(port.side)} onClick={handleOnClick} />;
+  return (
+    <div
+      ref={ref}
+      className={`node-port`}
+      css={portStyle(port.side)}
+      onMouseDown={handleOnDown}
+      onMouseUp={handleOnMouseUp}
+    />
+  );
 });
