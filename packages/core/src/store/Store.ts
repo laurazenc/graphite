@@ -66,6 +66,10 @@ class Store {
 
   @action public endConnection(to: Port) {
     if (this.draftConnection) {
+      if (to.node === this.draftConnection.node) {
+        throw new Error("Can't connect a node to itself");
+      }
+
       this.draftConnection.connect(to);
       this.draftConnection = null;
     }
