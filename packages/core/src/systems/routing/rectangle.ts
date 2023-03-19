@@ -1,7 +1,9 @@
-import { Rect } from './types';
+import { Rect, Size } from './types';
 import { Coordinate, CoordinateProps, Side } from '../../components';
+import { distance } from './distance';
 
 class Rectangle {
+  readonly CLOSE_DISTANCE: number = 25;
   constructor(readonly left: number, readonly top: number, readonly width: number, readonly height: number) {}
   static fromRect(r: Rect): Rectangle {
     return new Rectangle(r.left, r.top, r.width, r.height);
@@ -34,6 +36,22 @@ class Rectangle {
     return this.width === 1 && this.height === 1;
   }
 
+  closeTo(p: CoordinateProps): Side | null {
+    if (distance(p, this.north) < this.CLOSE_DISTANCE) {
+      return Side.TOP;
+    }
+    if (distance(p, this.east) < this.CLOSE_DISTANCE) {
+      return Side.RIGHT;
+    }
+    if (distance(p, this.south) < this.CLOSE_DISTANCE) {
+      return Side.BOTTOM;
+    }
+    if (distance(p, this.west) < this.CLOSE_DISTANCE) {
+      return Side.LEFT;
+    }
+    return null;
+  }
+
   /*inflate(horizontal: number, vertical: number): Rectangle {
     return Rectangle.fromOrth(
       this.left - horizontal,
@@ -61,13 +79,17 @@ class Rectangle {
     return Rectangle.fromOrth(Math.min(...x), Math.min(...y), Math.max(...x), Math.max(...y));
   }*/
 
-  /* get center(): Coordinate {
+  /*
+  }
+*/
+
+  get center(): CoordinateProps {
     return {
       x: this.left + this.width / 2,
       y: this.top + this.height / 2,
     };
   }
-*/
+
   get right(): number {
     return this.left + this.width;
   }
@@ -76,7 +98,7 @@ class Rectangle {
     return this.top + this.height;
   }
 
-  /*get location(): Coordinate {
+  /* get location(): Coordinate {
     return { x: this.left, y: this.top };
   }
 
@@ -94,27 +116,27 @@ class Rectangle {
 
   get northWest(): Coordinate {
     return { x: this.left, y: this.top };
-  }
+  }*/
 
-  get east(): Coordinate {
+  get east(): CoordinateProps {
     return { x: this.right, y: this.center.y };
   }
 
-  get north(): Coordinate {
+  get north(): CoordinateProps {
     return { x: this.center.x, y: this.top };
   }
 
-  get south(): Coordinate {
+  get south(): CoordinateProps {
     return { x: this.center.x, y: this.bottom };
   }
 
-  get west(): Coordinate {
+  get west(): CoordinateProps {
     return { x: this.left, y: this.center.y };
   }
 
   get size(): Size {
     return { width: this.width, height: this.height };
-  }*/
+  }
 }
 
 export { Rectangle };

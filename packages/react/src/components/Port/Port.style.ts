@@ -1,7 +1,7 @@
 import { css, CSSObject } from '@emotion/react';
 import { Side } from 'graphite-core';
 
-const PORT_SIZE = 10;
+const PORT_SIZE = 8;
 const PORT_SIZE_OFFSET = PORT_SIZE / 2;
 
 const positions: Record<Side, CSSObject> = {

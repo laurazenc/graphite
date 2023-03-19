@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { Node } from '../node';
 import { makeAutoObservable } from 'mobx';
 import { Connection } from '../connection';
+import { CoordinateProps } from '../coordinate';
 
 class Port {
   public id = uuid();

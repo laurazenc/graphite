@@ -16,8 +16,15 @@ const Graphite = observer(() => {
     store.setMousePosition({ x, y });
   }, []);
 
+  const handleOnMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (store.draftConnection && store.magnetPosition) {
+      store.endConnection(store.magnetPosition.port);
+      store.setMagnetPosition(null);
+    }
+  }, []);
+
   return (
-    <div className="container" onMouseMove={handleOnMouseMove}>
+    <div className="container" onMouseMove={handleOnMouseMove} onMouseDown={handleOnMouseDown}>
       <Grid />
       <Canvas />
     </div>

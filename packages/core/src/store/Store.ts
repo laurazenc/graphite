@@ -1,5 +1,6 @@
 import { action, computed, makeAutoObservable } from 'mobx';
-import { CoordinateProps, Port, Node, NodeProps } from '../components';
+import { CoordinateProps, Port, Node, NodeProps, Side } from '../components';
+import { Rectangle, Vertex } from '../systems/routing';
 
 class Store {
   public nodes: Map<Node['id'], Node> = new Map();
@@ -8,6 +9,7 @@ class Store {
   public nodePositions: Map<Node['id'], CoordinateProps> = new Map();
   public draftConnection: Port | null = null;
   public mousePosition: CoordinateProps = { x: 0, y: 0 };
+  public magnetPosition: { port: Port; vertex: Vertex } | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -18,6 +20,28 @@ class Store {
       .flatMap((node) => node.connections)
       .map((connection) => connection)
       .filter((value, index, self) => self.indexOf(value) === index);
+  }
+
+  get magnetConnection(): Vertex | null {
+    let closestVertex = null;
+    this.nodeElements.forEach((element, node) => {
+      if (node !== this.draftConnection?.node.id) {
+        const rect = Rectangle.fromRect(element.getBoundingClientRect());
+        const closeTo = rect.closeTo(this.mousePosition);
+        if (closeTo) {
+          const closestPort = this.getNodePortsMapBySide(node).get(closeTo);
+          closestVertex = { side: closeTo, rect };
+          if (closestPort) {
+            this.setMagnetPosition({ port: closestPort, vertex: closestVertex });
+          }
+        }
+      }
+    });
+    return closestVertex;
+  }
+
+  public setMagnetPosition(magnetPosition: { port: Port; vertex: Vertex } | null) {
+    this.magnetPosition = magnetPosition;
   }
 
   @action public addNode({ coordinates, ...node }: NodeProps): Node {
@@ -59,6 +83,10 @@ class Store {
   /* PORTS */
   @action public getNodePorts(nodeId: Node['id']): Port[] {
     return [...this.ports.values()].flatMap((port) => port).filter((port) => port.node.id === nodeId);
+  }
+  @action public getNodePortsMapBySide(nodeId: Node['id']): Map<Side, Port> {
+    const ports: Port[] = [...this.ports.values()].flatMap((port) => port).filter((port) => port.node.id === nodeId);
+    return new Map(ports.map((port: Port) => [port.side, port]));
   }
 
   @action public startConnection(from: Port | null) {
