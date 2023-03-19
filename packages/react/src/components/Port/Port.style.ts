@@ -23,4 +23,8 @@ export const portStyle = (side: Side) => css`
   border: 2px solid white;
   border-radius: 50%;
   ${calculatePosition(side)}
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

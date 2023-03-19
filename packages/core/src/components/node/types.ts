@@ -6,7 +6,7 @@ export type NodeConstructorArgs = {
   name: string;
   inputs?: PortProps[];
   outputs?: PortProps[];
-  size: SizeProps;
+  size?: SizeProps;
 };
 
 export interface NodeProps extends NodeConstructorArgs {

@@ -39,10 +39,3 @@
   z-index: 9;
 }
 
-.node-content {
-  min-width: 100px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}

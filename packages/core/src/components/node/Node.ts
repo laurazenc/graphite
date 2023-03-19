@@ -13,7 +13,7 @@ class Node {
 
   constructor({ name, size }: NodeConstructorArgs) {
     this.name = name;
-    this.size = new Size(size);
+    this.size = size ? new Size(size) : new Size({ width: 100, height: 100 });
     this.generatePorts();
 
     makeAutoObservable(this);
