@@ -20,6 +20,12 @@ const nodeC = store.addNode({
   coordinates: { x: 600, y: 300 },
 });
 
+const nodeD = store.addNode({
+  name: 'D',
+  size: Size.create(100, 100),
+  coordinates: { x: 300, y: 600 },
+});
+
 const portsA = store.getNodePorts(nodeA.id);
 const portsB = store.getNodePorts(nodeB.id);
 const portsC = store.getNodePorts(nodeC.id);

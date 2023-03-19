@@ -17,12 +17,12 @@ export const ConnectionDraft = observer(() => {
         if (fromElement && fromSide) {
           const fromRect = Rectangle.fromRect(fromElement.getBoundingClientRect());
           const toRect: Vertex = store.magnetConnection || {
-            side: Side.LEFT,
+            side: Side.BOTTOM,
             rect: Rectangle.fromRect({
-              height: 1,
+              height: 0,
               top: store.mousePosition.y,
               left: store.mousePosition.x,
-              width: 1,
+              width: 0,
             }),
           };
           const path = pathFinder({ side: fromSide, rect: fromRect }, toRect);

@@ -1,7 +1,7 @@
 import { pathFinder } from './path-finder';
 import { Rectangle } from './rectangle';
 import { Vertex } from './types';
-import { Coordinate, Side } from '../../components';
+import { CoordinateProps, Side } from '../../components';
 
 const source: Vertex = {
   rect: Rectangle.fromRect({ left: 50, top: 50, height: 60, width: 90 }),
@@ -15,7 +15,7 @@ const target: Vertex = {
 
 describe('Path Finder', () => {
   it('should return the best path', () => {
-    const expectedPath: Coordinate[] = [
+    const expectedPath: CoordinateProps[] = [
       {
         x: 50,
         y: 80,
@@ -36,8 +36,20 @@ describe('Path Finder', () => {
         x: 295,
         y: 160,
       },
-    ] as Coordinate[];
+    ];
     const path = pathFinder(source, target);
-    expect(path).toEqual(expectedPath);
+    expect(JSON.stringify(path)).toEqual(JSON.stringify(expectedPath));
+  });
+
+  it('should handle left turns', () => {
+    const expectedPath: CoordinateProps[] = [
+      { x: 295, y: 160 },
+      { x: 295, y: 170 },
+      { x: 40, y: 170 },
+      { x: 40, y: 80 },
+      { x: 50, y: 80 },
+    ];
+    const path = pathFinder(target, source);
+    expect(JSON.stringify(path)).toEqual(JSON.stringify(expectedPath));
   });
 });

@@ -1,5 +1,5 @@
 import { GraphiteStore } from 'graphite-core';
 
-export interface ScreenProps {
+export interface CanvasProps {
   store: GraphiteStore;
 }

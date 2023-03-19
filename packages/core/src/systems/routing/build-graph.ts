@@ -15,7 +15,6 @@ function buildGraph(points: CoordinateProps[]): { graph: PointGraph; connections
 
     graph.add(p);
   });
-
   hotXs.sort((a, b) => a - b);
   hotYs.sort((a, b) => a - b);
   const inHotIndex = (p: Coordinate): boolean => graph.has(p);
@@ -23,7 +22,6 @@ function buildGraph(points: CoordinateProps[]): { graph: PointGraph; connections
   for (let i = 0; i < hotYs.length; i++) {
     for (let j = 0; j < hotXs.length; j++) {
       const b = new Coordinate({ x: hotXs[j], y: hotYs[i] });
-
       if (!inHotIndex(b)) continue;
 
       if (j > 0) {

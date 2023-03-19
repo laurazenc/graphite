@@ -1,6 +1,6 @@
 import { Direction } from './types';
 import { distance as calculateDistance } from './distance';
-import { Coordinate, CoordinateProps } from '../../components';
+import { CoordinateProps } from '../../components';
 
 class PointNode {
   public distance = Infinity;
@@ -26,21 +26,20 @@ class PointGraph {
     }
   }
 
-  has(p: Coordinate): boolean {
+  has(p: CoordinateProps): boolean {
     const { x, y } = p;
     const xs = x.toString(),
       ys = y.toString();
     return xs in this.index && ys in this.index[xs];
   }
 
-  connect(a: Coordinate, b: Coordinate) {
+  connect(a: CoordinateProps, b: CoordinateProps) {
     const nodeA = this.get(a);
     const nodeB = this.get(b);
 
     if (!nodeA || !nodeB) {
       throw new Error(`A point was not found`);
     }
-
     nodeA.adjacentNodes.set(nodeB, calculateDistance(a, b));
   }
 
@@ -53,11 +52,9 @@ class PointGraph {
     if (xs in this.index && ys in this.index[xs]) {
       point = this.index[xs][ys];
     }
-
     if (!point) {
       throw new Error('Point dot not exist');
     }
-
     return point;
   }
 
@@ -102,7 +99,6 @@ class PointGraph {
     const goingDirection = this.directionOfNodes(sourceNode, evaluationNode);
     const changingDirection = comingDirection && goingDirection && comingDirection != goingDirection;
     const extraWeigh = changingDirection ? Math.pow(edgeWeigh + 1, 2) : 0;
-
     if (sourceDistance + edgeWeigh + extraWeigh < evaluationNode.distance) {
       evaluationNode.distance = sourceDistance + edgeWeigh + extraWeigh;
       const shortestPath: PointNode[] = [...sourceNode.shortestPath];
@@ -113,7 +109,6 @@ class PointGraph {
 
   calculateShortestPathFromSource(graph: PointGraph, source: PointNode): PointGraph {
     source.distance = 0;
-
     const settledNodes: Set<PointNode> = new Set();
     const unsettledNodes: Set<PointNode> = new Set();
 
@@ -122,16 +117,15 @@ class PointGraph {
     while (unsettledNodes.size != 0) {
       const currentNode = this.getLowestDistanceNode(unsettledNodes);
       unsettledNodes.delete(currentNode);
-
       for (const [adjacentNode, edgeWeight] of currentNode.adjacentNodes) {
         if (!settledNodes.has(adjacentNode)) {
           this.calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
           unsettledNodes.add(adjacentNode);
         }
       }
+
       settledNodes.add(currentNode);
     }
-
     return graph;
   }
 }
@@ -143,7 +137,6 @@ export function shortestPath(
 ): CoordinateProps[] {
   const originNode = graph.get(origin);
   const destinationNode = graph.get(destination);
-
   if (!originNode) {
     throw new Error(`Origin node {${origin.x},${origin.y}} not found`);
   }
@@ -151,9 +144,7 @@ export function shortestPath(
   if (!destinationNode) {
     throw new Error(`Origin node {${origin.x},${origin.y}} not found`);
   }
-
   graph.calculateShortestPathFromSource(graph, originNode);
-
   return destinationNode.shortestPath.map((n) => n.data);
 }
 

@@ -34,6 +34,7 @@ function getRulers(source: Rectangle, target: Rectangle) {
   const verticals: number[] = [...buildVerticalRuler(source), ...buildVerticalRuler(target)];
   horizontals.sort((a, b) => a - b);
   verticals.sort((a, b) => a - b);
+
   return [horizontals, verticals];
 }
 
@@ -82,7 +83,6 @@ function simplifyPath(points: CoordinateProps[]): CoordinateProps[] {
     const prev = points[i - 1];
     const next = points[i + 1];
     const bend = getBend(prev, cur, next);
-
     if (bend !== 'none') {
       r.push(cur);
     }
@@ -91,19 +91,17 @@ function simplifyPath(points: CoordinateProps[]): CoordinateProps[] {
 }
 
 export function pathFinder(source: Vertex, target: Vertex) {
+  console.log(source.rect, target.rect);
   const pointA = source.rect.startPoint(source.side);
   const pointB = target.rect.startPoint(target.side);
   const points: CoordinateProps[] = [];
-
   // Rulers
   const [horizontalRulers, verticalRulers] = getRulers(source.rect, target.rect);
-
   // Points
   for (const y of horizontalRulers) {
     for (const x of verticalRulers) {
       const point: CoordinateProps = { x, y };
       const collision = [source.rect, target.rect].filter((o) => o.contains(point));
-
       if (!collision.length) {
         points.push(point);
       }
@@ -112,7 +110,6 @@ export function pathFinder(source: Vertex, target: Vertex) {
 
   points.push(pointA);
   points.push(pointB);
-
   const { graph, connections } = buildGraph(points);
   const path = shortestPath(graph, pointA, pointB);
 

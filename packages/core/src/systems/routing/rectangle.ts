@@ -2,8 +2,9 @@ import { Rect, Size } from './types';
 import { Coordinate, CoordinateProps, Side } from '../../components';
 import { distance } from './distance';
 
+const CLOSE_DISTANCE = 25;
+
 class Rectangle {
-  readonly CLOSE_DISTANCE: number = 25;
   constructor(readonly left: number, readonly top: number, readonly width: number, readonly height: number) {}
   static fromRect(r: Rect): Rectangle {
     return new Rectangle(r.left, r.top, r.width, r.height);
@@ -25,7 +26,8 @@ class Rectangle {
         point = { x: this.right, y: this.top + this.height / 2 };
         break;
     }
-    return Coordinate.create(point.x, point.y);
+
+    return { x: point.x, y: point.y };
   }
 
   contains(p: CoordinateProps): boolean {
@@ -37,16 +39,16 @@ class Rectangle {
   }
 
   closeTo(p: CoordinateProps): Side | null {
-    if (distance(p, this.north) < this.CLOSE_DISTANCE) {
+    if (distance(p, this.north) < CLOSE_DISTANCE) {
       return Side.TOP;
     }
-    if (distance(p, this.east) < this.CLOSE_DISTANCE) {
+    if (distance(p, this.east) < CLOSE_DISTANCE) {
       return Side.RIGHT;
     }
-    if (distance(p, this.south) < this.CLOSE_DISTANCE) {
+    if (distance(p, this.south) < CLOSE_DISTANCE) {
       return Side.BOTTOM;
     }
-    if (distance(p, this.west) < this.CLOSE_DISTANCE) {
+    if (distance(p, this.west) < CLOSE_DISTANCE) {
       return Side.LEFT;
     }
     return null;
