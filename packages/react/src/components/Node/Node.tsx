@@ -33,13 +33,12 @@ const Node = observer(({ node }: NodeProps) => {
   );
 
   const position = store.nodePositions.get(node.id) || { x: 0, y: 0 };
-  const ports = store.getNodePorts(node.id) || [];
   return (
     <Draggable nodeRef={nodeRef} onDrag={handleOnDrag} handle=".handle" position={{ x: position.x, y: position.y }}>
       <div ref={nodeRef} className="node handle">
         <div className="node-content">{node.name}</div>
-        {ports.map(({ side }, index) => {
-          return <Port key={index} side={side} />;
+        {store.getNodePorts(node.id).map((port, index) => {
+          return <Port key={index} port={port} />;
         })}
       </div>
     </Draggable>

@@ -1,18 +1,18 @@
-import { action, makeAutoObservable } from 'mobx';
+import { action, computed, makeAutoObservable } from 'mobx';
 import { CoordinateProps, Port, Node, NodeProps } from '../components';
-import { Connection, ConnectionProps } from '../components/connection';
 
 class Store {
   public nodes: Map<Node['id'], Node> = new Map();
   public ports: Map<Port['id'], Port> = new Map();
   public nodeElements: Map<Node['id'], HTMLDivElement> = new Map();
   public nodePositions: Map<Node['id'], CoordinateProps> = new Map();
+  public draftConnection: Port | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  get connections() {
+  @computed get connections() {
     return [...this.nodes.values()]
       .flatMap((node) => node.connections)
       .map((connection) => connection)
@@ -39,27 +39,6 @@ class Store {
     return this.nodes.get(id);
   }
 
-  /*  @action public addConnection({ from, to }: ConnectionProps): Connection {
-    if (from === to) {
-      throw new Error("Can't connect a port to itself");
-    }
-
-    if (from.node === to.node) {
-      throw new Error("Can't connect a port to it's own node");
-    }
-
-    const connection = new Connection({ from, to });
-    this.connections.set(connection.id, connection);
-    return connection;
-  }*/
-
-  /*  @action public deleteConnection(connection: Connection) {
-    if (!this.connections.has(connection.id)) {
-      throw new Error('Connection does not exist');
-    }
-    this.connections.delete(connection.id);
-  }*/
-
   @action public addNodeElement(node: Node['id'], element: HTMLDivElement) {
     this.nodeElements.set(node, element);
   }
@@ -79,6 +58,17 @@ class Store {
   /* PORTS */
   @action public getNodePorts(nodeId: Node['id']): Port[] {
     return [...this.ports.values()].flatMap((port) => port).filter((port) => port.node.id === nodeId);
+  }
+
+  @action public startConnection(from: Port) {
+    this.draftConnection = from;
+  }
+
+  @action public endConnection(to: Port) {
+    if (this.draftConnection) {
+      this.draftConnection.connect(to);
+      this.draftConnection = null;
+    }
   }
 }
 
