@@ -9,11 +9,9 @@ class Node {
   id = uuid();
   name: string;
   ports: Port[] = [];
-  size: Size;
 
-  constructor({ name, size }: NodeConstructorArgs) {
+  constructor({ name }: NodeConstructorArgs) {
     this.name = name;
-    this.size = size ? new Size(size) : new Size({ width: 100, height: 100 });
     this.generatePorts();
 
     makeAutoObservable(this);
@@ -46,6 +44,11 @@ class Node {
       .map((connection) => {
         return connection;
       });
+  }
+
+  public update(node: Node): Node {
+    this.name = node.name;
+    return this;
   }
 }
 

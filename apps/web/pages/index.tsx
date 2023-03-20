@@ -5,24 +5,23 @@ import { Graphite, GraphiteProvider } from 'graphite-react';
 const store = new GraphiteStore();
 
 const nodeA = store.addNode({
-  name: 'A',
-  size: Size.create(100, 100),
+  name: 'A node',
   coordinates: { x: 50, y: 50 },
 });
 const nodeB = store.addNode({
-  name: 'B',
-  size: Size.create(100, 100),
+  name: 'B for big name',
+
   coordinates: { x: 300, y: 150 },
 });
 const nodeC = store.addNode({
-  name: 'C',
-  size: Size.create(100, 100),
+  name: 'Custom node ',
+
   coordinates: { x: 600, y: 300 },
 });
 
 const nodeD = store.addNode({
-  name: 'D',
-  size: Size.create(100, 100),
+  name: 'Different try for a long node name',
+
   coordinates: { x: 300, y: 600 },
 });
 

@@ -10,6 +10,7 @@ class Store {
   public draftConnection: Port | null = null;
   public mousePosition: CoordinateProps = { x: 0, y: 0 };
   public magnetPosition: { port: Port; vertex: Vertex } | null = null;
+  public selectedNode: Node | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -43,6 +44,8 @@ class Store {
   public setMagnetPosition(magnetPosition: { port: Port; vertex: Vertex } | null) {
     this.magnetPosition = magnetPosition;
   }
+
+  /* NODES */
 
   @action public addNode({ coordinates, ...node }: NodeProps): Node {
     const newNode = new Node(node);
@@ -78,6 +81,27 @@ class Store {
       throw new Error("Can't update position on node which doesn't exist");
     }
     this.nodePositions.set(nodeId, position);
+  }
+
+  @action public updateNode(node: Node) {
+    const current = this.nodes.get(node.id);
+    const currentElement = this.nodeElements.get(node.id);
+    if (!current || !currentElement) {
+      throw new Error("Can't update node which doesn't exist");
+    }
+    current.update(node);
+  }
+
+  @action public setSelectedNode(node: Node | null) {
+    if (!node) {
+      this.selectedNode = null;
+    } else {
+      const current = this.nodes.get(node.id);
+      if (!current) {
+        throw new Error("Can't select node which doesn't exist");
+      }
+      this.selectedNode = node;
+    }
   }
 
   /* PORTS */

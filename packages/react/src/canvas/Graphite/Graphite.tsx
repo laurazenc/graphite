@@ -21,6 +21,10 @@ const Graphite = observer(() => {
       store.endConnection(store.magnetPosition.port);
       store.setMagnetPosition(null);
     }
+
+    if (store.selectedNode) {
+      store.setSelectedNode(null);
+    }
   }, []);
 
   return (
