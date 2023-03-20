@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { NodeProps } from './types';
@@ -9,8 +9,6 @@ import { nodeContentStyle, nodeStyle } from './Node.style';
 const Node = observer(({ node }: NodeProps) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const { store } = useStore();
-  const nodeElement = store.nodeElements.get(node.id);
-  const storedNode = store.nodes.get(node.id);
 
   React.useEffect(() => {
     if (nodeRef.current) {
@@ -35,13 +33,6 @@ const Node = observer(({ node }: NodeProps) => {
     [node],
   );
 
-  const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
-    (e) => {
-      store.updateNode({ ...node, name: e.target.value });
-    },
-    [node],
-  );
-
   const handleOnClick = React.useCallback(() => {
     store.setSelectedNode(node);
   }, [node]);
@@ -52,15 +43,17 @@ const Node = observer(({ node }: NodeProps) => {
     <Draggable nodeRef={nodeRef} onDrag={handleOnDrag} handle=".handle" position={{ x: position.x, y: position.y }}>
       <div
         ref={nodeRef}
-        className={`node handle ${isSelected ? 'selected' : ''}`}
-        css={nodeStyle}
+        className="handle absolute bg-white rounded shadow shadow-md ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-grab z-10"
         onClick={handleOnClick}
       >
-        <label className="node-content" css={nodeContentStyle}>
+        <label
+          className="node-content font-mono text-xs subpixel-antialiased text-gray-700 cursor-grab w-[120px] p-[16px 8px]"
+          css={nodeContentStyle}
+        >
           {node.name}
         </label>
-        {store.getNodePorts(node.id).map((port, index) => {
-          return <Port key={index} port={port} />;
+        {store.getNodePorts(node.id).map((port) => {
+          return <Port key={port.id} port={port} />;
         })}
       </div>
     </Draggable>

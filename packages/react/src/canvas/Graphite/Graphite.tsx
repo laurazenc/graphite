@@ -28,7 +28,7 @@ const Graphite = observer(() => {
   }, []);
 
   return (
-    <div className="container" onMouseMove={handleOnMouseMove} onMouseDown={handleOnMouseDown}>
+    <div className="app" onMouseMove={handleOnMouseMove} onMouseDown={handleOnMouseDown}>
       <Grid />
       <Canvas />
     </div>

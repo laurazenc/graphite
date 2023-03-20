@@ -31,7 +31,7 @@
   "scripts": {
     "dev": "concurrently \"tsup src/index.ts --format esm,cjs --watch --dts --external react\" \"yarn css --watch\"",
     "build": "tsup src/index.ts --format esm,cjs --dts --external react",
-    "css": "postcss src/styles/{base,style}.css --config ./postcss.config.js --dir dist",
+    "css": "postcss src/styles/style.css --config ./postcss.config.js --dir dist",
     "css-watch": "yarn css --watch",
     "lint": "eslint \"src/**/*.ts*\"",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
@@ -44,22 +44,23 @@
   },
   "dependencies": {
     "@emotion/react": "11.10.6",
-    "@xstate/react": "3.0.1",
     "graphite-core": "*",
     "mobx": "6.8.0",
     "mobx-react-lite": "3.4.3",
-    "react-draggable": "4.4.5",
-    "xstate": "4.34.0"
+    "react-draggable": "4.4.5"
   },
   "devDependencies": {
     "@types/jest": "29.2.2",
     "@types/node": "18.11.7",
     "@types/react": "18.0.24",
+    "autoprefixer": "10.4.14",
     "eslint": "8.26.0",
     "eslint-config-custom": "*",
     "jest": "29.2.2",
-    "postcss": "8.4.18",
+    "postcss": "8.4.21",
+    "postcss-import": "15.1.0",
     "react": "18.2.0",
+    "tailwindcss": "3.2.7",
     "ts-jest": "29.0.3",
     "ts-node": "10.9.1",
     "tsconfig": "*",

@@ -24,8 +24,13 @@ export const Port = observer(({ port }: { port: _Port }) => {
   return (
     <div
       ref={ref}
-      className={`node-port`}
       css={portStyle(port.side)}
+      className={`node-port absolute
+      bg-gray-300
+      border-2
+      border-white
+      rounded-full 
+      hover:cursor-pointer`}
       onMouseDown={handleOnDown}
       onMouseUp={handleOnMouseUp}
     />

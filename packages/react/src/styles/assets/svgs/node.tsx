@@ -2,8 +2,8 @@ import * as React from 'react';
 
 function NodeIcon(props: any) {
   return (
-    <svg viewBox="0 0 20 20" fill="currentColor" height="1em" width="1em" {...props}>
-      <path d="M9 10V8h2v2h2v2h-2v2H9v-2H7v-2h2zM0 3c0-1.1.9-2 2-2h16a2 2 0 012 2v14a2 2 0 01-2 2H2a2 2 0 01-2-2V3zm2 2v12h16V5H2z" />
+    <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em" {...props}>
+      <path d="M2 1a1 1 0 100 2 1 1 0 000-2zM0 2a2 2 0 013.937-.5h8.126A2 2 0 1114.5 3.937v8.126a2 2 0 11-2.437 2.437H3.937A2 2 0 111.5 12.063V3.937A2 2 0 010 2zm2.5 1.937v8.126c.703.18 1.256.734 1.437 1.437h8.126a2.004 2.004 0 011.437-1.437V3.937A2.004 2.004 0 0112.063 2.5H3.937A2.004 2.004 0 012.5 3.937zM14 1a1 1 0 100 2 1 1 0 000-2zM2 13a1 1 0 100 2 1 1 0 000-2zm12 0a1 1 0 100 2 1 1 0 000-2z" />
     </svg>
   );
 }

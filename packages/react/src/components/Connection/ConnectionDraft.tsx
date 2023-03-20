@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../../store/useStore';
 import { autorun } from 'mobx';
-import { connectionDraftStyle } from './ConnectionDraft.style';
 import { pathFinder, Rectangle, Side, Vertex } from 'graphite-core';
 import { generateSVGPath, smoothStepCommand } from './utils';
 
@@ -34,14 +33,7 @@ export const ConnectionDraft = observer(() => {
 
   return (
     <g>
-      <path
-        className="connector-draft"
-        d={path}
-        css={connectionDraftStyle}
-        fill={'node'}
-        stroke="coral"
-        strokeWidth="2"
-      />
+      <path className="connector-draft stroke-2 stroke-red-400" fill={'none'} d={path} />
     </g>
   );
 });

@@ -37,11 +37,9 @@ const Connection = observer(({ connection }: { connection: _Connection }) => {
     }
   }, [connection]);
 
-  const strokeColor = '#1e62ff';
-
   return (
     <g>
-      <path className="connector" d={path} fill="none" strokeWidth="2" stroke={strokeColor} />
+      <path className="stroke-2 stroke-gray-300 hover:stroke-gray-400 hover:cursor-pointer" d={path} fill="none" />
     </g>
   );
 });
