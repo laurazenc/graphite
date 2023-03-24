@@ -10,7 +10,7 @@ const ConnectionRenderer = observer(() => {
   const { store } = useStore();
 
   return (
-    <svg ref={connectionRef} id="connections" width="100%" height="100%">
+    <svg ref={connectionRef} className="connections pointer-events-none absolute h-full w-full left-0 top-0 z-0">
       {store.connections.map((connection: _Connection) => {
         return <Connection connection={connection} key={connection.id} />;
       })}

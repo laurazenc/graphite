@@ -14,22 +14,25 @@ export const ConnectionDraft = observer(() => {
         const fromElement = store.nodeElements.get(store.draftConnection.node.id);
         const fromSide = store.draftConnection.side;
         if (fromElement && fromSide) {
-          const fromRect = Rectangle.fromRect(fromElement.getBoundingClientRect());
+          const fromRect = Rectangle.fromRect(fromElement.getBoundingClientRect(), store.viewPortTransform);
           const toRect: Vertex = store.magnetConnection || {
             side: Side.BOTTOM,
-            rect: Rectangle.fromRect({
-              height: 0,
-              top: store.mousePosition.y,
-              left: store.mousePosition.x,
-              width: 0,
-            }),
+            rect: Rectangle.fromRect(
+              {
+                height: 0,
+                top: store.mousePosition.y,
+                left: store.mousePosition.x,
+                width: 0,
+              },
+              store.viewPortTransform,
+            ),
           };
           const path = pathFinder({ side: fromSide, rect: fromRect }, toRect);
           setPath(generateSVGPath(path, smoothStepCommand));
         }
       }
     });
-  }, [store.draftConnection, store.mousePosition]);
+  }, [store.draftConnection, store.mousePosition, store.viewPortTransform]);
 
   return (
     <g>

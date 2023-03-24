@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { Grid } from '../../components/Grid/Grid';
-import { observer } from 'mobx-react-lite';
 import { Canvas } from '../../components';
 import { useStore } from '../../store/useStore';
+import { StatusBar } from '../StatusBar/StatusBar';
+import { Toolbar } from '../Toolbar/Toolbar';
 
 const Graphite = observer(() => {
   const { store } = useStore();
@@ -31,6 +33,8 @@ const Graphite = observer(() => {
     <div className="app" onMouseMove={handleOnMouseMove} onMouseDown={handleOnMouseDown}>
       <Grid />
       <Canvas />
+      <StatusBar />
+      <Toolbar />
     </div>
   );
 });

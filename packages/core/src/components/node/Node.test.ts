@@ -1,5 +1,5 @@
 import { Node } from './index';
-import { Side, Type } from '../port';
+import { Side } from '../port';
 
 const nodeA = new Node({
   name: 'A',
@@ -20,25 +20,15 @@ describe('Node', () => {
     });
 
     expect(node.id).toBeDefined();
-    expect(node.inputs).toEqual([]);
-    expect(node.outputs).toEqual([]);
-  });
-
-  it('can update a node size', () => {
-    const node = new Node({
-      name: 'My node',
-    });
-    node.size.setWidth(600);
-    expect(node.size.width).toEqual(600);
+    expect(node.ports).toEqual([]);
   });
 
   describe('Ports', () => {
     it('should return sides from ports in the same side', () => {
       const node = new Node({
         name: 'My node',
-
-        inputs: [{ node: nodeA, side: Side.TOP, type: Type.INPUT }],
-        outputs: [{ node: nodeB, side: Side.TOP, type: Type.OUTPUT }],
+        inputs: [{ node: nodeA, side: Side.TOP }],
+        outputs: [{ node: nodeB, side: Side.TOP }],
       });
 
       expect(node.getFilledSides()).toEqual([Side.TOP]);
@@ -46,14 +36,13 @@ describe('Node', () => {
     it('should return sides from ports in different sides', () => {
       const node = new Node({
         name: 'My node',
-
         inputs: [
-          { node: nodeA, side: Side.TOP, type: Type.INPUT },
-          { node: nodeB, side: Side.RIGHT, type: Type.INPUT },
+          { node: nodeA, side: Side.TOP },
+          { node: nodeB, side: Side.RIGHT },
         ],
         outputs: [
-          { node: nodeA, side: Side.BOTTOM, type: Type.OUTPUT },
-          { node: nodeB, side: Side.LEFT, type: Type.OUTPUT },
+          { node: nodeA, side: Side.BOTTOM },
+          { node: nodeB, side: Side.LEFT },
         ],
       });
 

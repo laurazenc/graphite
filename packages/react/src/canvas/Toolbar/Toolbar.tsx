@@ -8,7 +8,10 @@ export const Toolbar = observer(() => {
   const handleAddNewNode = useCallback(() => {
     store.addNode({
       name: 'New node',
-      coordinates: { x: store.mousePosition.x - 200, y: store.mousePosition.y + 100 },
+      coordinates: {
+        x: store.mousePosition.x - 200 - store.viewPortTransform.x,
+        y: store.mousePosition.y + 100 - store.viewPortTransform.y,
+      },
     });
   }, []);
 

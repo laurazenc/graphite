@@ -13,12 +13,6 @@ export const Port = observer(({ port }: { port: _Port }) => {
     } else {
       if (store.draftConnection !== port) store.startConnection(port);
     }
-  }, []);
-
-  const handleOnMouseUp = useCallback(() => {
-    /*if (store.draftConnection) {
-      store.endConnection(port);
-    }*/
   }, [port]);
 
   return (
@@ -30,9 +24,10 @@ export const Port = observer(({ port }: { port: _Port }) => {
       border-2
       border-white
       rounded-full 
-      hover:cursor-pointer`}
-      onMouseDown={handleOnDown}
-      onMouseUp={handleOnMouseUp}
+      hover:cursor-pointer
+      pointer-events-auto
+      `}
+      onClick={handleOnDown}
     />
   );
 });

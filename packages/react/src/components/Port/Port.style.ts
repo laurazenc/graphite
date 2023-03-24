@@ -16,15 +16,11 @@ const calculatePosition = (side: Side): CSSObject => {
 };
 
 export const portStyle = (side: Side) => css`
-  /*  position: absolute;
-  background-color: #374151;
-  border: 2px solid white;
-  border-radius: 50%;*/
-
   width: ${PORT_SIZE}px;
   height: ${PORT_SIZE}px;
+  user-select: all;
+  pointer-events: all;
+  ${calculatePosition(side)}
 
-  ${calculatePosition(side)}/*  &:hover {
-    cursor: pointer;
-  }*/
+  z-index: 20;
 `;

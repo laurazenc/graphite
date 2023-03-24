@@ -1,5 +1,6 @@
-const withTM = require('next-transpile-modules')(['graphite-react', 'graphite-core']);
-
-module.exports = withTM({
-  reactStrictMode: true,
-});
+module.exports = {
+  transpilePackages: ['graphite-react', 'graphite-core'],
+  experimental: {
+    esmExternals: 'loose',
+  },
+};

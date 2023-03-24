@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { GraphiteStore, Size } from 'graphite-core';
+import { GraphiteStore } from 'graphite-core';
 import { Graphite, GraphiteProvider } from 'graphite-react';
 
 const store = new GraphiteStore();

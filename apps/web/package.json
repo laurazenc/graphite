@@ -11,7 +11,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
-    "next": "13.0.0",
+    "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "graphite-react": "*",
@@ -25,7 +25,6 @@
     "@types/react-dom": "18.0.8",
     "typescript": "4.8.4",
     "tsconfig": "*",
-    "eslint-config-custom": "*",
-    "next-transpile-modules": "9.1.0"
+    "eslint-config-custom": "*"
   }
 }

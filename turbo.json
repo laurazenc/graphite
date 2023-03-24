@@ -10,10 +10,12 @@
         ".next/**"
       ]
     },
-    "lint": {},
     "dev": {
-      "cache": false
+      "cache": false,
+      "dependsOn": [
+      ]
     },
+    "lint": {},
     "clean": {
       "cache": false,
       "outputs": [

@@ -1,4 +1,5 @@
 import { action, computed, makeAutoObservable } from 'mobx';
+
 import { CoordinateProps, Port, Node, NodeProps, Side } from '../components';
 import { Rectangle, Vertex } from '../systems/routing';
 
@@ -11,10 +12,15 @@ class Store {
   public mousePosition: CoordinateProps = { x: 0, y: 0 };
   public magnetPosition: { port: Port; vertex: Vertex } | null = null;
   public selectedNode: Node | null = null;
+  public viewPortTransform: { x: number; y: number; zoom: number } = { x: 0, y: 0, zoom: 1 };
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  @action public setViewportTransform = (transform: { x: number; y: number; zoom: number }): void => {
+    this.viewPortTransform = transform;
+  };
 
   @computed get connections() {
     return [...this.nodes.values()]
@@ -27,7 +33,7 @@ class Store {
     let closestVertex = null;
     this.nodeElements.forEach((element, node) => {
       if (node !== this.draftConnection?.node.id) {
-        const rect = Rectangle.fromRect(element.getBoundingClientRect());
+        const rect = Rectangle.fromRect(element.getBoundingClientRect(), this.viewPortTransform);
         const closeTo = rect.closeTo(this.mousePosition);
         if (closeTo) {
           const closestPort = this.getNodePortsMapBySide(node).get(closeTo);
@@ -127,7 +133,7 @@ class Store {
   }
 
   /* MOUSE */
-  public setMousePosition(position: CoordinateProps) {
+  @action public setMousePosition(position: CoordinateProps) {
     this.mousePosition = position;
   }
 }

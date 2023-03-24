@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Connection as _Connection, CoordinateProps, pathFinder, Rectangle } from 'graphite-core';
+import { Connection as _Connection, pathFinder, Rectangle } from 'graphite-core';
 import React from 'react';
 import { useStore } from '../../store/useStore';
 import { autorun } from 'mobx';
@@ -22,24 +22,22 @@ const Connection = observer(({ connection }: { connection: _Connection }) => {
         const fromPortSide = connection.from.side;
         const toPortSide = connection.to.side;
         if (fromElement && toElement) {
-          const toRect = Rectangle.fromRect(toElement.getBoundingClientRect());
-          const fromRect = Rectangle.fromRect(fromElement.getBoundingClientRect());
+          const toRect = Rectangle.fromRect(toElement.getBoundingClientRect(), store.viewPortTransform);
+          const fromRect = Rectangle.fromRect(fromElement.getBoundingClientRect(), store.viewPortTransform);
           const path = pathFinder({ side: fromPortSide, rect: fromRect }, { side: toPortSide, rect: toRect });
           setPath(generateSVGPath(path, smoothStepCommand));
         }
       }
     });
-  }, [fromNodePosition, toNodePosition]);
-
-  const handleClick = React.useCallback(() => {
-    if (connection) {
-      connection.dispose();
-    }
-  }, [connection]);
+  }, [fromNodePosition, toNodePosition, store.viewPortTransform]);
 
   return (
     <g>
-      <path className="stroke-2 stroke-gray-300 hover:stroke-gray-400 hover:cursor-pointer" d={path} fill="none" />
+      <path
+        className="stroke-2 stroke-gray-300 hover:stroke-gray-400 hover:cursor-pointer pointer-events-auto"
+        d={path}
+        fill="none"
+      />
     </g>
   );
 });

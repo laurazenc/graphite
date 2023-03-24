@@ -1,13 +1,16 @@
 import { Rect, Size } from './types';
-import { Coordinate, CoordinateProps, Side } from '../../components';
+import { CoordinateProps, Side } from '../../components';
 import { distance } from './distance';
 
 const CLOSE_DISTANCE = 25;
 
 class Rectangle {
   constructor(readonly left: number, readonly top: number, readonly width: number, readonly height: number) {}
-  static fromRect(r: Rect): Rectangle {
-    return new Rectangle(r.left, r.top, r.width, r.height);
+  static fromRect(r: Rect, origin: { x: number; y: number; zoom: number } = { x: 0, y: 0, zoom: 1 }): Rectangle {
+    const left = r.left - origin.x / origin.zoom;
+    const top = r.top - origin.y / origin.zoom;
+
+    return new Rectangle(left, top, r.width, r.height);
   }
 
   startPoint(side: Side): CoordinateProps {

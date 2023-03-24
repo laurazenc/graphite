@@ -44,12 +44,18 @@
   },
   "dependencies": {
     "@emotion/react": "11.10.6",
+    "d3-drag": "3.0.0",
+    "d3-selection": "3.0.0",
+    "d3-zoom": "3.0.0",
     "graphite-core": "*",
     "mobx": "6.8.0",
     "mobx-react-lite": "3.4.3",
     "react-draggable": "4.4.5"
   },
   "devDependencies": {
+    "@types/d3-drag": "3.0.2",
+    "@types/d3-selection": "3.0.5",
+    "@types/d3-zoom": "3.0.2",
     "@types/jest": "29.2.2",
     "@types/node": "18.11.7",
     "@types/react": "18.0.24",

@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
-import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { NodeProps } from './types';
 import { useStore } from '../../store/useStore';
 import { Port } from '../Port/Port';
-import { nodeContentStyle, nodeStyle } from './Node.style';
+import { nodeContentStyle } from './Node.style';
+import { drag } from 'd3-drag';
+import { select } from 'd3-selection';
 
 const Node = observer(({ node }: NodeProps) => {
   const nodeRef = useRef<HTMLDivElement>(null);
@@ -20,18 +21,20 @@ const Node = observer(({ node }: NodeProps) => {
     }
   }, [nodeRef]);
 
-  const handleOnDrag: DraggableEventHandler = React.useCallback(
-    (e, { deltaX, deltaY }) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const { x, y } = store.nodePositions.get(node.id) || { x: 0, y: 0 };
-      store.setNodePosition(node.id, {
-        x: x + deltaX,
-        y: y + deltaY,
+  useEffect(() => {
+    if (nodeRef.current) {
+      const dragInstance = drag().on('drag', (event) => {
+        if (event.sourceEvent.target.classList.contains('node-content')) {
+          const { x, y } = store.nodePositions.get(node.id) || { x: 0, y: 0 };
+          store.setNodePosition(node.id, {
+            x: x + event.dx / store.viewPortTransform.zoom,
+            y: y + event.dy / store.viewPortTransform.zoom,
+          });
+        }
       });
-    },
-    [node],
-  );
+      select(nodeRef.current as Element).call(dragInstance);
+    }
+  }, [nodeRef, store, store.viewPortTransform]);
 
   const handleOnClick = React.useCallback(() => {
     store.setSelectedNode(node);
@@ -40,23 +43,25 @@ const Node = observer(({ node }: NodeProps) => {
   const position = store.nodePositions.get(node.id) || { x: 0, y: 0 };
   const isSelected = store.selectedNode === node;
   return (
-    <Draggable nodeRef={nodeRef} onDrag={handleOnDrag} handle=".handle" position={{ x: position.x, y: position.y }}>
-      <div
-        ref={nodeRef}
-        className="handle absolute bg-white rounded shadow shadow-md ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-grab z-10"
+    <div
+      ref={nodeRef}
+      className={`handle absolute bg-white rounded shadow shadow-md ring-1 ring-inset ring-gray-300 hover:bg-gray-50 pointer-events-none cursor-${
+        isSelected ? 'grabbing' : 'grab'
+      } z-0`}
+      style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+    >
+      <label
+        className="node-content font-mono text-xs subpixel-antialiased text-gray-700 cursor-grab w-[120px] p-[16px 8px] pointer-events-auto "
         onClick={handleOnClick}
+        css={nodeContentStyle}
+        style={{ zIndex: 10 }}
       >
-        <label
-          className="node-content font-mono text-xs subpixel-antialiased text-gray-700 cursor-grab w-[120px] p-[16px 8px]"
-          css={nodeContentStyle}
-        >
-          {node.name}
-        </label>
-        {store.getNodePorts(node.id).map((port) => {
-          return <Port key={port.id} port={port} />;
-        })}
-      </div>
-    </Draggable>
+        {node.name}
+      </label>
+      {store.getNodePorts(node.id).map((port) => {
+        return <Port key={port.id} port={port} />;
+      })}
+    </div>
   );
 });
 
